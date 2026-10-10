@@ -2,13 +2,13 @@
   "id": "./",
   "name": "DayFlow \u2014 Daily Planner",
   "short_name": "DayFlow",
-  "description": "A free daily planner with task management, calendar, focus timer and notes.",
+  "description": "DayFlow v4 \u2014 daily tasks, calendar, focus timer, notes and productivity tools.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0b0d16",
-  "theme_color": "#0b0d16",
+  "background_color": "#080b14",
+  "theme_color": "#080b14",
   "categories": [
     "productivity",
     "lifestyle"
