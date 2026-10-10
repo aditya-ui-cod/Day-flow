@@ -1,4 +1,4 @@
-const CACHE = 'dayflow-study-planner-v9';
+const CACHE = 'dayflow-study-planner-v10';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
