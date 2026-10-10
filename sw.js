@@ -1,4 +1,4 @@
-const CACHE = 'dayflow-study-planner-v12';
+const CACHE = 'dayflow-study-planner-v13';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
@@ -14,3 +14,5 @@ self.addEventListener('fetch', event => {
     return response;
   }).catch(() => caches.match('./index.html'))));
 });
+
+self.addEventListener('notificationclick', event => { event.notification.close(); event.waitUntil((async () => { const all = await clients.matchAll({ type: 'window', includeUncontrolled: true }); for (const client of all) { if ('focus' in client) { await client.focus(); return; } } if (clients.openWindow) await clients.openWindow('./'); })()); });
