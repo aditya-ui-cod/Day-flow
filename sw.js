@@ -1,4 +1,4 @@
-const CACHE = 'dayflow-cache-v4';
+const CACHE = 'dayflow-home-refresh-v5';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
