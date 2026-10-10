@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10111b">
+<meta name="description" content="A free daily planner for tasks, study, college, and personal routines.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>DayFlow — Daily Task Manager</title>
+<style>
+:root{--bg:#0c0d14;--panel:#151722;--panel2:#1c1f2d;--text:#f4f5fb;--muted:#a2a7bc;--line:#2a2e40;--accent:#8b6cff;--accent2:#6848e8;--green:#42d6a0;--red:#ff6b78;--yellow:#ffc857;--blue:#6bb8ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#20203c 0,var(--bg) 52%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{max-width:980px;margin:auto;padding:24px 16px 48px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}.brand{display:flex;gap:11px;align-items:center}.logo{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#a58aff,#6445e8);font-size:23px;box-shadow:0 8px 25px #7857ff40}.brand h1{font-size:22px;margin:0;letter-spacing:-.6px}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.top-actions{display:flex;gap:8px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 13px;border-radius:12px}.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:0;font-weight:700}.btn.small{padding:7px 10px;font-size:12px}.hero{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:10px 0 18px}.eyebrow{color:#b4a4ff;font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}.hero h2{font-size:clamp(27px,5vw,38px);letter-spacing:-1.4px;line-height:1.1;margin:7px 0}.hero p{margin:0;color:var(--muted)}.date-pill{color:#d9d2ff;background:#25213c;border:1px solid #40356b;padding:9px 12px;border-radius:13px;white-space:nowrap;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px}.stat{padding:15px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#1a1c2a,#13151e)}.stat .label{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:27px;margin-top:4px}.stat:nth-child(2) strong{color:var(--green)}.stat:nth-child(3) strong{color:var(--blue)}.stat:nth-child(4) strong{color:var(--yellow)}
+.progress-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px 17px;margin-bottom:18px}.progress-head{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:10px}.progress-head span:last-child{color:#c4b7ff;font-weight:700}.track{height:8px;background:#2b2e3e;border-radius:20px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#a58aff,#5ee4b2);border-radius:20px;transition:width .25s}
+.layout{display:grid;grid-template-columns: minmax(0,1.5fr) minmax(260px,.85fr);gap:16px;align-items:start}.panel{background:rgba(21,23,34,.94);border:1px solid var(--line);border-radius:20px;padding:17px}.panel-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.panel-title h3{margin:0;font-size:17px}.count{font-size:12px;color:var(--muted)}
+.add-form{display:grid;gap:10px}.field{width:100%;border:1px solid #35394c;border-radius:12px;padding:12px;background:#10121b;color:var(--text);outline:none;min-width:0}.field:focus{border-color:var(--accent);box-shadow:0 0 0 3px #8b6cff22}.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.form-label{display:block;color:var(--muted);font-size:12px;margin:2px 0 5px}.filters{display:flex;gap:7px;overflow:auto;padding-bottom:3px;margin:16px 0 11px}.filter{white-space:nowrap;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:10px;padding:8px 12px;font-size:12px}.filter.active{background:#30274e;border-color:#6d55bf;color:#fff}.search{margin-bottom:10px}.task-list{display:grid;gap:9px}.task{display:flex;gap:11px;align-items:flex-start;padding:13px;border-radius:14px;background:#1a1c28;border:1px solid #2b2e40}.task.done{opacity:.65}.task.done .task-name{text-decoration:line-through;color:var(--muted)}.check{width:23px;height:23px;flex:0 0 23px;border:2px solid #666d86;border-radius:8px;background:transparent;color:#111;display:grid;place-items:center;padding:0;margin-top:1px}.task.done .check{background:var(--green);border-color:var(--green)}.task-main{min-width:0;flex:1}.task-name{font-weight:650;overflow-wrap:anywhere}.task-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}.tag{font-size:11px;padding:4px 7px;border-radius:7px;background:#292c3b;color:#c6c9d9}.tag.high{color:#ff9ca5;background:#48232d}.tag.medium{color:#ffd47c;background:#44371e}.tag.low{color:#7de6bd;background:#183d34}.tag.late{color:#ff9ca5;background:#48232d}.task-actions{display:flex;gap:5px}.icon-btn{border:0;background:transparent;color:var(--muted);padding:5px 7px;border-radius:8px}.icon-btn:hover{background:#303345;color:#fff}.empty{text-align:center;color:var(--muted);padding:30px 10px}.empty .emoji{font-size:30px;margin-bottom:6px}.side-section+.side-section{border-top:1px solid var(--line);margin-top:18px;padding-top:17px}.quick-list{display:grid;gap:9px}.quick-item{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:#d6d8e4}.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px;flex:0 0 8px}.quick-item small{display:block;color:var(--muted);margin-top:2px}.note{width:100%;min-height:105px;resize:vertical}.note-hint{font-size:11px;color:var(--muted);margin:6px 0 0}.footer{text-align:center;color:#767c92;font-size:11px;margin-top:22px}
+@media(max-width:700px){.app{padding:17px 12px 35px}.layout{grid-template-columns:1fr}.stats{gap:7px}.stat{padding:12px}.stat strong{font-size:23px}.stat .label{font-size:11px}.hero{align-items:start;flex-direction:column}.date-pill{font-size:12px}.top{margin-bottom:19px}.brand h1{font-size:20px}.top-actions .btn{padding:8px 10px}.panel{padding:14px}.row2{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.stats{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.brand p{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <div class="brand"><div class="logo">✓</div><div><h1>DayFlow</h1><p>Your day, under control.</p></div></div>
+  <div class="top-actions"><button class="btn" id="exportBtn" title="Download a backup">↧ Backup</button><button class="btn" id="importBtn" title="Restore a backup">↥ Restore</button><input type="file" id="importFile" accept="application/json" hidden></div>
+</header>
+<section class="hero"><div><div class="eyebrow">Daily planner</div><h2 id="greeting">Make today count.</h2><p>Small steps. Real progress.</p></div><div class="date-pill" id="todayDate"></div></section>
+<section class="stats">
+ <div class="stat"><div class="label">All tasks</div><strong id="total">0</strong></div>
+ <div class="stat"><div class="label">Completed</div><strong id="completed">0</strong></div>
+ <div class="stat"><div class="label">Pending</div><strong id="pending">0</strong></div>
+ <div class="stat"><div class="label">Overdue</div><strong id="overdue">0</strong></div>
+</section>
+<section class="progress-card"><div class="progress-head"><span>Today's progress</span><span id="progressText">0% complete</span></div><div class="track"><div class="bar" id="progressBar"></div></div></section>
+<div class="layout">
+ <main class="panel">
+  <div class="panel-title"><h3>My tasks</h3><span class="count" id="taskCount">0 tasks</span></div>
+  <form id="taskForm" class="add-form">
+   <input class="field" id="taskTitle" maxlength="140" placeholder="What do you need to do?" required>
+   <input class="field" id="taskNotes" maxlength="300" placeholder="Notes (optional)">
+   <div class="row2">
+    <div><label class="form-label" for="taskDate">Due date</label><input class="field" type="date" id="taskDate" required></div>
+    <div><label class="form-label" for="taskTime">Time (optional)</label><input class="field" type="time" id="taskTime"></div>
+   </div>
+   <div class="row2">
+    <div><label class="form-label" for="taskCategory">Category</label><select class="field" id="taskCategory"><option>Personal</option><option>College</option><option>Study</option><option>Work</option><option>Health</option><option>Errands</option><option>Other</option></select></div>
+    <div><label class="form-label" for="taskPriority">Priority</label><select class="field" id="taskPriority"><option>Medium</option><option>High</option><option>Low</option></select></div>
+   </div>
+   <button class="btn primary" type="submit" id="submitBtn">＋ Add task</button>
+  </form>
+  <div class="filters" id="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="today">Today</button><button class="filter" data-filter="active">Pending</button><button class="filter" data-filter="completed">Completed</button><button class="filter" data-filter="high">High priority</button></div>
+  <input class="field search" id="search" placeholder="⌕  Search tasks…">
+  <div class="task-list" id="taskList"></div>
+  <button class="btn small" id="clearDone" style="margin-top:12px">Clear completed tasks</button>
+ </main>
+ <aside class="panel">
+  <div class="side-section" style="padding-top:0;margin-top:0;border:0"><div class="panel-title"><h3>Coming up</h3><span class="count">Next 7 days</span></div><div class="quick-list" id="upcoming"></div></div>
+  <div class="side-section"><div class="panel-title"><h3>Daily notes</h3><span class="count">Auto-saved</span></div><textarea class="field note" id="dailyNote" maxlength="2000" placeholder="Ideas, reminders, or what you want to focus on…"></textarea><p class="note-hint">Notes are saved on this device in this browser.</p></div>
+  <div class="side-section"><div class="panel-title"><h3>Data & privacy</h3></div><p style="font-size:12px;color:var(--muted);margin:0">DayFlow works without an account or paid API. Tasks and notes stay in this browser on this device. Use Backup regularly so you don't lose them.</p></div>
+ </aside>
+</div>
+<div class="footer">DAYFLOW · Simple tools for a calmer day</div>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const KEY='dayflow_tasks_v1', NOTE='dayflow_daily_note_v1';
+let tasks=[],filter='all',editingId=null;
+const localToday=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const safeLoad=()=>{try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x:[]}catch{return []}};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(tasks))}catch{alert('Browser storage is full. Please export a backup.')}};
+const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const prettyDate=s=>{if(!s)return '';const d=new Date(s+'T12:00:00');return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})};
+const isOverdue=t=>!t.done&&t.date&&t.date<localToday();
+function render(){
+ const today=localToday(),done=tasks.filter(t=>t.done).length,pending=tasks.length-done,overdue=tasks.filter(isOverdue).length;
+ $('total').textContent=tasks.length;$('completed').textContent=done;$('pending').textContent=pending;$('overdue').textContent=overdue;
+ const todays=tasks.filter(t=>t.date===today),todaysDone=todays.filter(t=>t.done).length,pct=todays.length?Math.round(todaysDone/todays.length*100):0;
+ $('progressText').textContent=pct+'% complete';$('progressBar').style.width=pct+'%';$('taskCount').textContent=tasks.length+' task'+(tasks.length===1?'':'s');
+ const query=$('search').value.trim().toLowerCase();
+ let list=tasks.filter(t=>{
+  if(filter==='today'&&t.date!==today)return false;
+  if(filter==='active'&&t.done)return false;
+  if(filter==='completed'&&!t.done)return false;
+  if(filter==='high'&&t.priority!=='High')return false;
+  return !query||[t.title,t.notes,t.category,t.priority].join(' ').toLowerCase().includes(query);
+ });
+ list.sort((a,b)=>(a.done-b.done)||(a.date||'9999').localeCompare(b.date||'9999')||(a.time||'99:99').localeCompare(b.time||'99:99')||({High:0,Medium:1,Low:2}[a.priority]-{High:0,Medium:1,Low:2}[b.priority]));
+ $('taskList').innerHTML=list.length?list.map(t=>`<article class="task ${t.done?'done':''}">
+ <button class="check" data-action="toggle" data-id="${t.id}" aria-label="Mark task ${t.done?'pending':'completed'}">${t.done?'✓':''}</button>
+ <div class="task-main"><div class="task-name">${escapeHTML(t.title)}</div>${t.notes?`<div style="font-size:12px;color:var(--muted);margin-top:4px;overflow-wrap:anywhere">${escapeHTML(t.notes)}</div>`:''}
+ <div class="task-meta"><span class="tag">${escapeHTML(t.category)}</span><span class="tag ${t.priority.toLowerCase()}">${escapeHTML(t.priority)}</span>${t.date?`<span class="tag ${isOverdue(t)?'late':''}">${isOverdue(t)?'Overdue · ':''}${prettyDate(t.date)}${t.time?' · '+escapeHTML(t.time):''}</span>`:''}</div></div>
+ <div class="task-actions"><button class="icon-btn" data-action="edit" data-id="${t.id}" aria-label="Edit task">✎</button><button class="icon-btn" data-action="delete" data-id="${t.id}" aria-label="Delete task">×</button></div></article>`).join(''):`<div class="empty"><div class="emoji">✦</div><div>${query?'No matching tasks.':filter==='completed'?'No completed tasks yet.':'Nothing here right now.'}</div><small>Add a task above to get started.</small></div>`;
+ const upcoming=tasks.filter(t=>!t.done&&t.date>=today&&t.date<=new Date(Date.now()+7*86400000).toISOString().slice(0,10)).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||'')).slice(0,5);
+ $('upcoming').innerHTML=upcoming.length?upcoming.map(t=>`<div class="quick-item"><span class="dot" style="background:${t.priority==='High'?'var(--red)':t.priority==='Low'?'var(--green)':'var(--accent)'}"></span><div><strong>${escapeHTML(t.title)}</strong><small>${prettyDate(t.date)}${t.time?' · '+escapeHTML(t.time):''} · ${escapeHTML(t.category)}</small></div></div>`).join(''):'<div class="empty" style="padding:12px 0">No upcoming tasks 🎉</div>';
+}
+function resetForm(){editingId=null;$('taskForm').reset();$('taskDate').value=localToday();$('submitBtn').textContent='＋ Add task'}
+$('taskForm').addEventListener('submit',e=>{e.preventDefault();const title=$('taskTitle').value.trim();if(!title)return;
+ const item={id:editingId||String(Date.now())+Math.random().toString(16).slice(2),title,notes:$('taskNotes').value.trim(),date:$('taskDate').value, time:$('taskTime').value,category:$('taskCategory').value,priority:$('taskPriority').value,done:false,created:Date.now()};
+ if(editingId){const old=tasks.find(t=>t.id===editingId);if(old){item.done=old.done;item.created=old.created;tasks=tasks.map(t=>t.id===editingId?item:t)}}else tasks.push(item);
+ save();resetForm();render();$('taskTitle').focus();
+});
+$('taskList').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const id=b.dataset.id,act=b.dataset.action,t=tasks.find(x=>x.id===id);if(!t)return;
+ if(act==='toggle'){t.done=!t.done;save();render()}
+ if(act==='delete'){if(confirm('Delete this task?')){tasks=tasks.filter(x=>x.id!==id);if(editingId===id)resetForm();save();render()}}
+ if(act==='edit'){editingId=id;$('taskTitle').value=t.title;$('taskNotes').value=t.notes||'';$('taskDate').value=t.date||localToday();$('taskTime').value=t.time||'';$('taskCategory').value=t.category||'Personal';$('taskPriority').value=t.priority||'Medium';$('submitBtn').textContent='✓ Save changes';$('taskTitle').focus();window.scrollTo({top:0,behavior:'smooth'})}
+});
+$('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;filter=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));render()});
+$('search').addEventListener('input',render);
+$('clearDone').addEventListener('click',()=>{const n=tasks.filter(t=>t.done).length;if(!n)return alert('No completed tasks to clear.');if(confirm(`Delete ${n} completed task(s)?`)){tasks=tasks.filter(t=>!t.done);save();render()}});
+$('dailyNote').value=localStorage.getItem(NOTE)||'';$('dailyNote').addEventListener('input',()=>{try{localStorage.setItem(NOTE,$('dailyNote').value)}catch{}});
+$('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({app:'DayFlow',version:1,tasks,note:$('dailyNote').value},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='dayflow-backup-'+localToday()+'.json';a.click();URL.revokeObjectURL(url)});
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text()),incoming=Array.isArray(data)?data:data.tasks;if(!Array.isArray(incoming))throw Error();if(confirm('Restore this backup? Current tasks will be replaced.')){tasks=incoming.filter(t=>t&&typeof t.title==='string').map(t=>({...t,id:String(t.id||Date.now()+Math.random())}));if(typeof data.note==='string'){$('dailyNote').value=data.note;localStorage.setItem(NOTE,data.note)}save();render();alert('Backup restored.')}}catch{alert('This backup file is not valid.')}e.target.value=''});
+const now=new Date();$('todayDate').textContent=now.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+const hour=now.getHours();$('greeting').textContent=hour<12?'Good morning.':hour<17?'Make today count.':'Good evening.';
+$('taskDate').value=localToday();tasks=safeLoad();render();
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
