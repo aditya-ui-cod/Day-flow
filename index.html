@@ -28,7 +28,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}
 <body>
 <div class="app">
 <header class="top">
-  <div class="brand"><div class="logo">✓</div><div><h1>DayFlow</h1><p>Your day, under control.</p></div></div>
+  <div class="brand"><div class="logo">✓</div><div><h1>DayFlow</h1><p>Your day, under control · v2</p></div></div>
   <div class="top-actions"><button class="btn" id="exportBtn" title="Download a backup">↧ Backup</button><button class="btn" id="importBtn" title="Restore a backup">↥ Restore</button><input type="file" id="importFile" accept="application/json" hidden></div>
 </header>
 <section class="hero"><div><div class="eyebrow">Daily planner</div><h2 id="greeting">Make today count.</h2><p>Small steps. Real progress.</p></div><div class="date-pill" id="todayDate"></div></section>
@@ -50,6 +50,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}
     <div><label class="form-label" for="taskTime">Time (optional)</label><input class="field" type="time" id="taskTime"></div>
    </div>
    <div class="row2">
+    <div><label class="form-label" for="taskRepeat">Repeat</label><select class="field" id="taskRepeat"><option value="none">Does not repeat</option><option value="daily">Every day</option><option value="weekly">Every week</option><option value="monthly">Every month</option></select></div>
     <div><label class="form-label" for="taskCategory">Category</label><select class="field" id="taskCategory"><option>Personal</option><option>College</option><option>Study</option><option>Work</option><option>Health</option><option>Errands</option><option>Other</option></select></div>
     <div><label class="form-label" for="taskPriority">Priority</label><select class="field" id="taskPriority"><option>Medium</option><option>High</option><option>Low</option></select></div>
    </div>
@@ -62,6 +63,12 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}
  </main>
  <aside class="panel">
   <div class="side-section" style="padding-top:0;margin-top:0;border:0"><div class="panel-title"><h3>Coming up</h3><span class="count">Next 7 days</span></div><div class="quick-list" id="upcoming"></div></div>
+  <div class="side-section"><div class="panel-title"><h3>Focus timer</h3><span class="count">Pomodoro</span></div>
+   <p style="font-size:12px;color:var(--muted);margin:0 0 10px">Focus for 25 minutes, then take a short break. Keep this screen open while the timer runs.</p>
+   <div id="focusClock" style="font-size:42px;font-weight:800;letter-spacing:1px;text-align:center;padding:8px;color:#c4b5fd;font-variant-numeric:tabular-nums">25:00</div>
+   <div class="row2"><button class="btn primary" id="focusStart">▶ Start</button><button class="btn" id="focusReset">↺ Reset</button></div>
+   <div style="display:flex;gap:7px;margin-top:9px"><button class="filter active" data-minutes="25">Focus 25m</button><button class="filter" data-minutes="5">Short break 5m</button><button class="filter" data-minutes="15">Long break 15m</button></div>
+  </div>
   <div class="side-section"><div class="panel-title"><h3>Daily notes</h3><span class="count">Auto-saved</span></div><textarea class="field note" id="dailyNote" maxlength="2000" placeholder="Ideas, reminders, or what you want to focus on…"></textarea><p class="note-hint">Notes are saved on this device in this browser.</p></div>
   <div class="side-section"><div class="panel-title"><h3>Data & privacy</h3></div><p style="font-size:12px;color:var(--muted);margin:0">DayFlow works without an account or paid API. Tasks and notes stay in this browser on this device. Use Backup regularly so you don't lose them.</p></div>
  </aside>
@@ -79,6 +86,13 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(tasks))}catch{alert(
 const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const prettyDate=s=>{if(!s)return '';const d=new Date(s+'T12:00:00');return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})};
 const isOverdue=t=>!t.done&&t.date&&t.date<localToday();
+function nextDate(date, repeat){
+ const d = new Date((date || localToday()) + 'T12:00:00');
+ if(repeat==='daily') d.setDate(d.getDate()+1);
+ else if(repeat==='weekly') d.setDate(d.getDate()+7);
+ else if(repeat==='monthly') { const day=d.getDate(); d.setDate(1); d.setMonth(d.getMonth()+1); const last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate(); d.setDate(Math.min(day,last)); }
+ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
 function render(){
  const today=localToday(),done=tasks.filter(t=>t.done).length,pending=tasks.length-done,overdue=tasks.filter(isOverdue).length;
  $('total').textContent=tasks.length;$('completed').textContent=done;$('pending').textContent=pending;$('overdue').textContent=overdue;
@@ -96,21 +110,28 @@ function render(){
  $('taskList').innerHTML=list.length?list.map(t=>`<article class="task ${t.done?'done':''}">
  <button class="check" data-action="toggle" data-id="${t.id}" aria-label="Mark task ${t.done?'pending':'completed'}">${t.done?'✓':''}</button>
  <div class="task-main"><div class="task-name">${escapeHTML(t.title)}</div>${t.notes?`<div style="font-size:12px;color:var(--muted);margin-top:4px;overflow-wrap:anywhere">${escapeHTML(t.notes)}</div>`:''}
- <div class="task-meta"><span class="tag">${escapeHTML(t.category)}</span><span class="tag ${t.priority.toLowerCase()}">${escapeHTML(t.priority)}</span>${t.date?`<span class="tag ${isOverdue(t)?'late':''}">${isOverdue(t)?'Overdue · ':''}${prettyDate(t.date)}${t.time?' · '+escapeHTML(t.time):''}</span>`:''}</div></div>
+ <div class="task-meta"><span class="tag">${escapeHTML(t.category)}</span><span class="tag ${t.priority.toLowerCase()}">${escapeHTML(t.priority)}</span>${t.repeat&&t.repeat!=='none'?`<span class="tag">↻ ${({daily:'Daily',weekly:'Weekly',monthly:'Monthly'}[t.repeat]||'Repeats')}</span>`:''}${t.date?`<span class="tag ${isOverdue(t)?'late':''}">${isOverdue(t)?'Overdue · ':''}${prettyDate(t.date)}${t.time?' · '+escapeHTML(t.time):''}</span>`:''}</div></div>
  <div class="task-actions"><button class="icon-btn" data-action="edit" data-id="${t.id}" aria-label="Edit task">✎</button><button class="icon-btn" data-action="delete" data-id="${t.id}" aria-label="Delete task">×</button></div></article>`).join(''):`<div class="empty"><div class="emoji">✦</div><div>${query?'No matching tasks.':filter==='completed'?'No completed tasks yet.':'Nothing here right now.'}</div><small>Add a task above to get started.</small></div>`;
  const upcoming=tasks.filter(t=>!t.done&&t.date>=today&&t.date<=new Date(Date.now()+7*86400000).toISOString().slice(0,10)).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||'')).slice(0,5);
  $('upcoming').innerHTML=upcoming.length?upcoming.map(t=>`<div class="quick-item"><span class="dot" style="background:${t.priority==='High'?'var(--red)':t.priority==='Low'?'var(--green)':'var(--accent)'}"></span><div><strong>${escapeHTML(t.title)}</strong><small>${prettyDate(t.date)}${t.time?' · '+escapeHTML(t.time):''} · ${escapeHTML(t.category)}</small></div></div>`).join(''):'<div class="empty" style="padding:12px 0">No upcoming tasks 🎉</div>';
 }
 function resetForm(){editingId=null;$('taskForm').reset();$('taskDate').value=localToday();$('submitBtn').textContent='＋ Add task'}
 $('taskForm').addEventListener('submit',e=>{e.preventDefault();const title=$('taskTitle').value.trim();if(!title)return;
- const item={id:editingId||String(Date.now())+Math.random().toString(16).slice(2),title,notes:$('taskNotes').value.trim(),date:$('taskDate').value, time:$('taskTime').value,category:$('taskCategory').value,priority:$('taskPriority').value,done:false,created:Date.now()};
+ const item={id:editingId||String(Date.now())+Math.random().toString(16).slice(2),title,notes:$('taskNotes').value.trim(),date:$('taskDate').value, time:$('taskTime').value,category:$('taskCategory').value,priority:$('taskPriority').value,repeat:$('taskRepeat').value,done:false,created:Date.now()};
  if(editingId){const old=tasks.find(t=>t.id===editingId);if(old){item.done=old.done;item.created=old.created;tasks=tasks.map(t=>t.id===editingId?item:t)}}else tasks.push(item);
  save();resetForm();render();$('taskTitle').focus();
 });
 $('taskList').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const id=b.dataset.id,act=b.dataset.action,t=tasks.find(x=>x.id===id);if(!t)return;
- if(act==='toggle'){t.done=!t.done;save();render()}
+ if(act==='toggle'){
+  const wasDone=t.done; t.done=!t.done;
+  if(!wasDone && t.repeat && t.repeat!=='none'){
+    const next={...t,id:String(Date.now())+Math.random().toString(16).slice(2),date:nextDate(t.date,t.repeat),done:false,created:Date.now()};
+    tasks.push(next);
+  }
+  save();render()
+}
  if(act==='delete'){if(confirm('Delete this task?')){tasks=tasks.filter(x=>x.id!==id);if(editingId===id)resetForm();save();render()}}
- if(act==='edit'){editingId=id;$('taskTitle').value=t.title;$('taskNotes').value=t.notes||'';$('taskDate').value=t.date||localToday();$('taskTime').value=t.time||'';$('taskCategory').value=t.category||'Personal';$('taskPriority').value=t.priority||'Medium';$('submitBtn').textContent='✓ Save changes';$('taskTitle').focus();window.scrollTo({top:0,behavior:'smooth'})}
+ if(act==='edit'){editingId=id;$('taskTitle').value=t.title;$('taskNotes').value=t.notes||'';$('taskDate').value=t.date||localToday();$('taskTime').value=t.time||'';$('taskCategory').value=t.category||'Personal';$('taskPriority').value=t.priority||'Medium';$('taskRepeat').value=t.repeat||'none';$('submitBtn').textContent='✓ Save changes';$('taskTitle').focus();window.scrollTo({top:0,behavior:'smooth'})}
 });
 $('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;filter=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));render()});
 $('search').addEventListener('input',render);
@@ -119,6 +140,21 @@ $('dailyNote').value=localStorage.getItem(NOTE)||'';$('dailyNote').addEventListe
 $('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({app:'DayFlow',version:1,tasks,note:$('dailyNote').value},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='dayflow-backup-'+localToday()+'.json';a.click();URL.revokeObjectURL(url)});
 $('importBtn').addEventListener('click',()=>$('importFile').click());
 $('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text()),incoming=Array.isArray(data)?data:data.tasks;if(!Array.isArray(incoming))throw Error();if(confirm('Restore this backup? Current tasks will be replaced.')){tasks=incoming.filter(t=>t&&typeof t.title==='string').map(t=>({...t,id:String(t.id||Date.now()+Math.random())}));if(typeof data.note==='string'){$('dailyNote').value=data.note;localStorage.setItem(NOTE,data.note)}save();render();alert('Backup restored.')}}catch{alert('This backup file is not valid.')}e.target.value=''});
+let focusSeconds=25*60, focusInterval=null, focusRunning=false;
+function paintFocus(){const m=Math.floor(focusSeconds/60),s=focusSeconds%60;$('focusClock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
+function stopFocus(){if(focusInterval)clearInterval(focusInterval);focusInterval=null;focusRunning=false;$('focusStart').textContent='▶ Start';}
+$('focusStart').addEventListener('click',()=>{
+ if(focusRunning){stopFocus();return;}
+ if(focusSeconds<=0)focusSeconds=25*60;
+ focusRunning=true;$('focusStart').textContent='Ⅱ Pause';
+ focusInterval=setInterval(()=>{focusSeconds--;paintFocus();if(focusSeconds<=0){stopFocus();if('Notification' in window && Notification.permission==='granted')new Notification('DayFlow Focus Timer',{body:'Timer finished. Take a breath and review your progress.'});alert('Focus timer finished! Take a short break.');}},1000);
+});
+$('focusReset').addEventListener('click',()=>{stopFocus();focusSeconds=25*60;paintFocus()});
+document.querySelectorAll('[data-minutes]').forEach(b=>b.addEventListener('click',()=>{stopFocus();focusSeconds=Number(b.dataset.minutes)*60;document.querySelectorAll('[data-minutes]').forEach(x=>x.classList.toggle('active',x===b));paintFocus()}));
+if('Notification' in window){
+ const oldRender=render;
+ render=function(){oldRender();};
+}
 const now=new Date();$('todayDate').textContent=now.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});
 const hour=now.getHours();$('greeting').textContent=hour<12?'Good morning.':hour<17?'Make today count.':'Good evening.';
 $('taskDate').value=localToday();tasks=safeLoad();render();

@@ -2,7 +2,7 @@
   "id": "./",
   "name": "DayFlow \u2014 Daily Task Manager",
   "short_name": "DayFlow",
-  "description": "A free daily planner for tasks, study, college, and personal routines.",
+  "description": "A free daily planner with recurring tasks and a focus timer.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
