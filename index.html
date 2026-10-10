@@ -3,167 +3,221 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#10111b">
-<meta name="description" content="A free daily planner for tasks, study, college, and personal routines.">
+<meta name="theme-color" content="#0b0d16">
+<meta name="description" content="DayFlow — your daily tasks, calendar, focus timer and notes in one free app.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png" type="image/png">
-<link rel="apple-touch-icon" href="icon-192.png">
-<title>DayFlow — Daily Task Manager</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>DayFlow — Daily Planner</title>
 <style>
-:root{--bg:#0c0d14;--panel:#151722;--panel2:#1c1f2d;--text:#f4f5fb;--muted:#a2a7bc;--line:#2a2e40;--accent:#8b6cff;--accent2:#6848e8;--green:#42d6a0;--red:#ff6b78;--yellow:#ffc857;--blue:#6bb8ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#20203c 0,var(--bg) 52%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
-button,input,select,textarea{font:inherit}button{cursor:pointer}
-.app{max-width:980px;margin:auto;padding:24px 16px 48px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}.brand{display:flex;gap:11px;align-items:center}.logo{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,#a58aff,#6445e8);font-size:23px;box-shadow:0 8px 25px #7857ff40}.brand h1{font-size:22px;margin:0;letter-spacing:-.6px}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.top-actions{display:flex;gap:8px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 13px;border-radius:12px}.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:0;font-weight:700}.btn.small{padding:7px 10px;font-size:12px}.hero{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:10px 0 18px}.eyebrow{color:#b4a4ff;font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}.hero h2{font-size:clamp(27px,5vw,38px);letter-spacing:-1.4px;line-height:1.1;margin:7px 0}.hero p{margin:0;color:var(--muted)}.date-pill{color:#d9d2ff;background:#25213c;border:1px solid #40356b;padding:9px 12px;border-radius:13px;white-space:nowrap;font-size:13px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px}.stat{padding:15px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#1a1c2a,#13151e)}.stat .label{color:var(--muted);font-size:12px}.stat strong{display:block;font-size:27px;margin-top:4px}.stat:nth-child(2) strong{color:var(--green)}.stat:nth-child(3) strong{color:var(--blue)}.stat:nth-child(4) strong{color:var(--yellow)}
-.progress-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px 17px;margin-bottom:18px}.progress-head{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:10px}.progress-head span:last-child{color:#c4b7ff;font-weight:700}.track{height:8px;background:#2b2e3e;border-radius:20px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#a58aff,#5ee4b2);border-radius:20px;transition:width .25s}
-.layout{display:grid;grid-template-columns: minmax(0,1.5fr) minmax(260px,.85fr);gap:16px;align-items:start}.panel{background:rgba(21,23,34,.94);border:1px solid var(--line);border-radius:20px;padding:17px}.panel-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.panel-title h3{margin:0;font-size:17px}.count{font-size:12px;color:var(--muted)}
-.add-form{display:grid;gap:10px}.field{width:100%;border:1px solid #35394c;border-radius:12px;padding:12px;background:#10121b;color:var(--text);outline:none;min-width:0}.field:focus{border-color:var(--accent);box-shadow:0 0 0 3px #8b6cff22}.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.form-label{display:block;color:var(--muted);font-size:12px;margin:2px 0 5px}.filters{display:flex;gap:7px;overflow:auto;padding-bottom:3px;margin:16px 0 11px}.filter{white-space:nowrap;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:10px;padding:8px 12px;font-size:12px}.filter.active{background:#30274e;border-color:#6d55bf;color:#fff}.search{margin-bottom:10px}.task-list{display:grid;gap:9px}.task{display:flex;gap:11px;align-items:flex-start;padding:13px;border-radius:14px;background:#1a1c28;border:1px solid #2b2e40}.task.done{opacity:.65}.task.done .task-name{text-decoration:line-through;color:var(--muted)}.check{width:23px;height:23px;flex:0 0 23px;border:2px solid #666d86;border-radius:8px;background:transparent;color:#111;display:grid;place-items:center;padding:0;margin-top:1px}.task.done .check{background:var(--green);border-color:var(--green)}.task-main{min-width:0;flex:1}.task-name{font-weight:650;overflow-wrap:anywhere}.task-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}.tag{font-size:11px;padding:4px 7px;border-radius:7px;background:#292c3b;color:#c6c9d9}.tag.high{color:#ff9ca5;background:#48232d}.tag.medium{color:#ffd47c;background:#44371e}.tag.low{color:#7de6bd;background:#183d34}.tag.late{color:#ff9ca5;background:#48232d}.task-actions{display:flex;gap:5px}.icon-btn{border:0;background:transparent;color:var(--muted);padding:5px 7px;border-radius:8px}.icon-btn:hover{background:#303345;color:#fff}.empty{text-align:center;color:var(--muted);padding:30px 10px}.empty .emoji{font-size:30px;margin-bottom:6px}.side-section+.side-section{border-top:1px solid var(--line);margin-top:18px;padding-top:17px}.quick-list{display:grid;gap:9px}.quick-item{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:#d6d8e4}.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px;flex:0 0 8px}.quick-item small{display:block;color:var(--muted);margin-top:2px}.note{width:100%;min-height:105px;resize:vertical}.note-hint{font-size:11px;color:var(--muted);margin:6px 0 0}.footer{text-align:center;color:#767c92;font-size:11px;margin-top:22px}
-@media(max-width:700px){.app{padding:17px 12px 35px}.layout{grid-template-columns:1fr}.stats{gap:7px}.stat{padding:12px}.stat strong{font-size:23px}.stat .label{font-size:11px}.hero{align-items:start;flex-direction:column}.date-pill{font-size:12px}.top{margin-bottom:19px}.brand h1{font-size:20px}.top-actions .btn{padding:8px 10px}.panel{padding:14px}.row2{grid-template-columns:1fr 1fr}}
-@media(max-width:380px){.stats{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.brand p{display:none}}
+:root{--bg:#0b0d16;--panel:#141724;--panel2:#1a1e2d;--line:#2a3043;--text:#f5f6ff;--muted:#a4abc2;--purple:#8955ff;--purple2:#6537e8;--green:#32d49a;--blue:#48a9ff;--red:#ff6678;--yellow:#ffc45e}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 48% -10%,#202345 0,transparent 46%),var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh;padding-bottom:88px}
+button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #a88aff;outline-offset:2px}
+.app{max-width:760px;margin:auto;padding:17px 13px 24px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:23px}.brand{display:flex;gap:10px;align-items:center;min-width:0}.logo{width:48px;height:48px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(140deg,#a58aff,#6538e9);font-size:27px;font-weight:800;box-shadow:0 7px 24px #7148ff35;flex-shrink:0}.brand h1{font-size:22px;margin:0;letter-spacing:-.6px}.brand p{margin:1px 0 0;color:var(--muted);font-size:12px}.top-actions{display:flex;gap:7px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 12px;border-radius:13px;font-weight:600}.btn.primary{background:linear-gradient(135deg,var(--purple),var(--purple2));border:0;color:white;font-weight:750;box-shadow:0 7px 18px #7948ff24}.btn.small{padding:7px 10px;font-size:12px}.hero{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:8px 0 19px}.eyebrow{color:#b5a2ff;font-size:12px;font-weight:850;letter-spacing:1.6px;text-transform:uppercase}.hero h2{font-size:clamp(27px,6vw,35px);letter-spacing:-1.2px;line-height:1.1;margin:7px 0}.hero p{margin:0;color:var(--muted)}.date-pill{color:#ded5ff;background:#28213f;border:1px solid #493779;padding:10px 12px;border-radius:14px;white-space:nowrap;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:15px}.stat{padding:12px 9px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#191d2d,#121520);min-width:0}.stat .label{color:var(--muted);font-size:11px}.stat strong{display:block;font-size:27px;margin-top:2px}.stat:nth-child(2) strong{color:var(--green)}.stat:nth-child(3) strong{color:var(--blue)}.stat:nth-child(4) strong{color:var(--red)}
+.progress-card,.panel{background:rgba(20,23,36,.97);border:1px solid var(--line);border-radius:21px;padding:16px;margin-bottom:15px;box-shadow:0 10px 32px #0000000c}.progress-head{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:10px}.progress-head span:last-child{color:#c7b5ff;font-weight:750}.track{height:8px;background:#2b3043;border-radius:20px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#a58aff,#5ee4b2);border-radius:20px;transition:width .25s}
+.panel-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.panel-title h3{margin:0;font-size:18px;letter-spacing:-.3px}.count{font-size:12px;color:var(--muted)}.field{width:100%;border:1px solid #343a50;border-radius:13px;padding:13px;background:#0f121c;color:var(--text);outline:none;min-width:0}.field:focus{border-color:var(--purple);box-shadow:0 0 0 3px #8b6cff22}.field::placeholder{color:#777f96}.form-label{display:block;color:var(--muted);font-size:12px;margin:2px 0 6px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-stack{display:grid;gap:11px}.category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.category-choice{background:#191d2b;border:1px solid #2c3245;border-radius:13px;padding:11px 5px;text-align:center;color:var(--muted);font-size:12px}.category-choice span{display:block;font-size:22px;margin-bottom:4px}.category-choice.active{border-color:#986cff;background:#2b2049;color:white;box-shadow:0 0 0 1px #986cff33}
+.filters{display:flex;gap:7px;overflow:auto;padding-bottom:3px;margin:15px 0 11px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}.filter{white-space:nowrap;border:1px solid var(--line);background:#121521;color:var(--muted);border-radius:11px;padding:9px 13px;font-size:12px}.filter.active{background:linear-gradient(135deg,#8955ff,#6335e6);border-color:transparent;color:#fff}.search{margin-bottom:11px}.task-list{display:grid;gap:9px}.task{display:flex;gap:10px;align-items:flex-start;padding:13px;border-radius:15px;background:linear-gradient(145deg,#1a1e2c,#151824);border:1px solid #282e40}.task.done{opacity:.62}.task.done .task-name{text-decoration:line-through;color:var(--muted)}.check{width:26px;height:26px;flex:0 0 26px;border:2px solid #707993;border-radius:50%;background:transparent;color:#06120e;display:grid;place-items:center;padding:0;margin-top:1px;font-weight:900}.task.done .check{background:var(--green);border-color:var(--green)}.task-main{min-width:0;flex:1}.task-name{font-weight:700;overflow-wrap:anywhere}.task-note{font-size:12px;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}.task-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.tag{font-size:10px;padding:4px 7px;border-radius:7px;background:#292e40;color:#c6cbe0}.tag.high{color:#ff9ca5;background:#48232d}.tag.medium{color:#ffd47c;background:#44371e}.tag.low{color:#7de6bd;background:#183d34}.tag.late{color:#ff9ca5;background:#48232d}.task-actions{display:flex;gap:2px}.icon-btn{border:0;background:transparent;color:var(--muted);padding:5px 7px;border-radius:8px;font-size:18px}.icon-btn:hover{background:#303345;color:#fff}.empty{text-align:center;color:var(--muted);padding:26px 10px}.empty .emoji{font-size:30px;margin-bottom:6px}.quick-list{display:grid;gap:10px}.quick-item{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:#d6d8e4}.dot{width:8px;height:8px;border-radius:50%;background:var(--purple);margin-top:6px;flex:0 0 8px}.quick-item small{display:block;color:var(--muted);margin-top:2px}.hidden{display:none!important}.bottom-nav{position:fixed;z-index:20;left:0;right:0;bottom:0;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));background:#10131ff2;backdrop-filter:blur(18px);border-top:1px solid #2a3043;display:grid;grid-template-columns:repeat(5,1fr);max-width:760px;margin:auto}.nav-btn{border:0;background:transparent;color:#a7afc8;padding:6px 2px 4px;border-radius:12px;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px}.nav-btn .nav-icon{font-size:22px;line-height:1.2}.nav-btn.active{color:#b69aff}.nav-btn.active .nav-icon{filter:drop-shadow(0 0 7px #8855ff88)}.fab{position:fixed;right:max(18px,calc((100vw - 720px)/2));bottom:91px;width:58px;height:58px;border:0;border-radius:50%;background:linear-gradient(140deg,#9a6bff,#6735eb);color:white;font-size:32px;box-shadow:0 8px 24px #7545ff55;z-index:15}.page-heading{margin:8px 0 18px}.page-heading h2{margin:0;font-size:28px;letter-spacing:-.7px}.page-heading p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.segment{display:flex;gap:4px;padding:4px;border-radius:13px;background:#202435;margin-bottom:13px}.segment button{flex:1;border:0;border-radius:10px;background:transparent;color:var(--muted);padding:9px 4px;font-size:12px}.segment button.active{background:var(--purple);color:white;font-weight:700}
+.week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:12px 0 16px}.day-pick{border:1px solid transparent;background:#111521;color:var(--muted);border-radius:12px;padding:8px 2px;text-align:center;font-size:10px}.day-pick strong{display:block;font-size:16px;color:var(--text);margin-top:4px}.day-pick.active{background:linear-gradient(160deg,#8d5bff,#6237e9);color:white}.day-pick.active strong{color:white}.calendar-list{display:grid;gap:9px}.calendar-event{display:flex;gap:10px;padding:11px;border-radius:13px;background:#171b29;border:1px solid #2b3042}.event-time{min-width:58px;color:var(--muted);font-size:11px;padding-top:2px}.event-content{border-left:3px solid var(--purple);padding-left:10px;min-width:0}.event-content strong{display:block;overflow-wrap:anywhere}.event-content small{color:var(--muted)}
+.timer-wrap{text-align:center;padding:16px 0 10px}.timer-ring{width:230px;height:230px;border-radius:50%;margin:5px auto 20px;display:grid;place-items:center;background:conic-gradient(#8955ff var(--timer-progress,0%),#272b3e 0);position:relative}.timer-ring:before{content:"";position:absolute;inset:10px;border-radius:50%;background:#141724}.timer-inner{position:relative;z-index:1}.clock{font-size:45px;font-weight:800;letter-spacing:1px;font-variant-numeric:tabular-nums}.timer-sub{color:var(--muted);font-size:13px}.timer-controls{display:grid;grid-template-columns:1fr 1fr;gap:9px}.note-editor{min-height:180px;resize:vertical;line-height:1.7}.note-tools{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.quick-note{display:flex;align-items:center;gap:10px;padding:12px;background:#191d2b;border:1px solid #2b3042;border-radius:12px;margin-top:8px}.quick-note span{flex:1;overflow-wrap:anywhere}.setting-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.setting-row:last-child{border-bottom:0}.setting-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#2a2149;font-size:21px;flex-shrink:0}.setting-row .setting-copy{flex:1;min-width:0}.setting-row strong{display:block;font-size:14px}.setting-row small{display:block;color:var(--muted);font-size:12px;margin-top:2px}.switch{width:44px;height:25px;border:0;border-radius:99px;background:#454b60;padding:3px}.switch:after{content:"";display:block;width:19px;height:19px;border-radius:50%;background:#fff;transition:transform .2s}.switch.on{background:var(--purple)}.switch.on:after{transform:translateX(19px)}.footer{text-align:center;color:#727a94;font-size:10px;margin:22px 0 5px}
+@media(min-width:650px){.app{padding:24px 18px 30px}.home-columns{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:start}.stats{gap:10px}.stat{padding:14px}.fab{bottom:95px}}
+@media(max-width:390px){.app{padding:14px 10px 22px}.top-actions .btn{padding:8px;font-size:12px}.brand h1{font-size:20px}.brand p{font-size:10px}.stats{gap:5px}.stat{padding:10px 7px}.stat strong{font-size:24px}.stat .label{font-size:10px}.hero{align-items:flex-start;flex-direction:column}.date-pill{align-self:flex-start}.panel,.progress-card{padding:13px}.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.timer-ring{width:210px;height:210px}.clock{font-size:40px}}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top">
-  <div class="brand"><div class="logo">✓</div><div><h1>DayFlow</h1><p>Your day, under control · v2</p></div></div>
-  <div class="top-actions"><button class="btn" id="exportBtn" title="Download a backup">↧ Backup</button><button class="btn" id="importBtn" title="Restore a backup">↥ Restore</button><input type="file" id="importFile" accept="application/json" hidden></div>
+ <div class="brand"><div class="logo">✓</div><div><h1>DayFlow</h1><p>Your day, under control · v3</p></div></div>
+ <div class="top-actions"><button class="btn" id="exportBtn" title="Back up tasks and notes">↓ Backup</button><button class="btn" id="importBtn" title="Restore backup">↑ Restore</button><input type="file" id="importFile" accept="application/json" hidden></div>
 </header>
-<section class="hero"><div><div class="eyebrow">Daily planner</div><h2 id="greeting">Make today count.</h2><p>Small steps. Real progress.</p></div><div class="date-pill" id="todayDate"></div></section>
-<section class="stats">
- <div class="stat"><div class="label">All tasks</div><strong id="total">0</strong></div>
- <div class="stat"><div class="label">Completed</div><strong id="completed">0</strong></div>
- <div class="stat"><div class="label">Pending</div><strong id="pending">0</strong></div>
- <div class="stat"><div class="label">Overdue</div><strong id="overdue">0</strong></div>
-</section>
-<section class="progress-card"><div class="progress-head"><span>Today's progress</span><span id="progressText">0% complete</span></div><div class="track"><div class="bar" id="progressBar"></div></div></section>
-<div class="layout">
- <main class="panel">
-  <div class="panel-title"><h3>My tasks</h3><span class="count" id="taskCount">0 tasks</span></div>
-  <form id="taskForm" class="add-form">
-   <input class="field" id="taskTitle" maxlength="140" placeholder="What do you need to do?" required>
-   <input class="field" id="taskNotes" maxlength="300" placeholder="Notes (optional)">
-   <div class="row2">
-    <div><label class="form-label" for="taskDate">Due date</label><input class="field" type="date" id="taskDate" required></div>
-    <div><label class="form-label" for="taskTime">Time (optional)</label><input class="field" type="time" id="taskTime"></div>
-   </div>
-   <div class="row2">
-    <div><label class="form-label" for="taskRepeat">Repeat</label><select class="field" id="taskRepeat"><option value="none">Does not repeat</option><option value="daily">Every day</option><option value="weekly">Every week</option><option value="monthly">Every month</option></select></div>
-    <div><label class="form-label" for="taskCategory">Category</label><select class="field" id="taskCategory"><option>Personal</option><option>College</option><option>Study</option><option>Work</option><option>Health</option><option>Errands</option><option>Other</option></select></div>
-    <div><label class="form-label" for="taskPriority">Priority</label><select class="field" id="taskPriority"><option>Medium</option><option>High</option><option>Low</option></select></div>
-   </div>
-   <button class="btn primary" type="submit" id="submitBtn">＋ Add task</button>
-  </form>
-  <div class="filters" id="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="today">Today</button><button class="filter" data-filter="active">Pending</button><button class="filter" data-filter="completed">Completed</button><button class="filter" data-filter="high">High priority</button></div>
-  <input class="field search" id="search" placeholder="⌕  Search tasks…">
-  <div class="task-list" id="taskList"></div>
-  <button class="btn small" id="clearDone" style="margin-top:12px">Clear completed tasks</button>
- </main>
- <aside class="panel">
-  <div class="side-section" style="padding-top:0;margin-top:0;border:0"><div class="panel-title"><h3>Coming up</h3><span class="count">Next 7 days</span></div><div class="quick-list" id="upcoming"></div></div>
-  <div class="side-section"><div class="panel-title"><h3>Focus timer</h3><span class="count">Pomodoro</span></div>
-   <p style="font-size:12px;color:var(--muted);margin:0 0 10px">Focus for 25 minutes, then take a short break. Keep this screen open while the timer runs.</p>
-   <div id="focusClock" style="font-size:42px;font-weight:800;letter-spacing:1px;text-align:center;padding:8px;color:#c4b5fd;font-variant-numeric:tabular-nums">25:00</div>
-   <div class="row2"><button class="btn primary" id="focusStart">▶ Start</button><button class="btn" id="focusReset">↺ Reset</button></div>
-   <div style="display:flex;gap:7px;margin-top:9px"><button class="filter active" data-minutes="25">Focus 25m</button><button class="filter" data-minutes="5">Short break 5m</button><button class="filter" data-minutes="15">Long break 15m</button></div>
+
+<main id="page-home" class="page">
+ <section class="hero"><div><div class="eyebrow">Daily planner</div><h2 id="greeting">Make today count.</h2><p>Small steps. Real progress.</p></div><div class="date-pill" id="todayDate"></div></section>
+ <section class="stats">
+  <div class="stat"><div class="label">Total tasks</div><strong id="total">0</strong></div><div class="stat"><div class="label">Completed</div><strong id="completed">0</strong></div><div class="stat"><div class="label">Pending</div><strong id="pending">0</strong></div><div class="stat"><div class="label">Overdue</div><strong id="overdue">0</strong></div>
+ </section>
+ <section class="progress-card"><div class="progress-head"><span>Today's progress</span><span id="progressText">0% complete</span></div><div class="track"><div class="bar" id="progressBar"></div></div></section>
+ <div class="home-columns">
+  <section class="panel">
+   <div class="panel-title"><h3>Today's tasks</h3><span class="count" id="taskCount">0 tasks</span></div>
+   <div class="filters" id="filters"><button class="filter active" data-filter="today">Today</button><button class="filter" data-filter="upcoming">Upcoming</button><button class="filter" data-filter="high">Important</button><button class="filter" data-filter="all">All</button><button class="filter" data-filter="active">Pending</button><button class="filter" data-filter="completed">Done</button></div>
+   <input class="field search" id="search" placeholder="⌕  Search tasks…">
+   <div class="task-list" id="taskList"></div>
+   <button class="btn small" id="clearDone" style="margin-top:12px">Clear completed tasks</button>
+  </section>
+  <div>
+   <section class="panel"><div class="panel-title"><h3>Coming up</h3><span class="count">7 days</span></div><div class="quick-list" id="upcoming"></div></section>
+   <section class="panel"><div class="panel-title"><h3>Daily focus</h3><span class="count">One step at a time</span></div><p style="font-size:13px;color:var(--muted);margin:0 0 12px">Pick one important thing and give it your attention.</p><button class="btn primary" style="width:100%" data-go="focus">◷ Start focus session</button></section>
   </div>
-  <div class="side-section"><div class="panel-title"><h3>Daily notes</h3><span class="count">Auto-saved</span></div><textarea class="field note" id="dailyNote" maxlength="2000" placeholder="Ideas, reminders, or what you want to focus on…"></textarea><p class="note-hint">Notes are saved on this device in this browser.</p></div>
-  <div class="side-section"><div class="panel-title"><h3>Data & privacy</h3></div><p style="font-size:12px;color:var(--muted);margin:0">DayFlow works without an account or paid API. Tasks and notes stay in this browser on this device. Use Backup regularly so you don't lose them.</p></div>
- </aside>
-</div>
+ </div>
+</main>
+
+<main id="page-add" class="page hidden">
+ <div class="page-heading"><h2 id="addHeading">Add task</h2><p>Quick and easy task creation.</p></div>
+ <section class="panel">
+  <form id="taskForm" class="form-stack">
+   <div><label class="form-label" for="taskTitle">Task title</label><input class="field" id="taskTitle" maxlength="140" placeholder="What do you need to do?" required></div>
+   <div><label class="form-label" for="taskNotes">Description / notes (optional)</label><textarea class="field" id="taskNotes" maxlength="500" rows="2" placeholder="Add a few details…"></textarea></div>
+   <div class="form-grid"><div><label class="form-label" for="taskDate">Date</label><input class="field" type="date" id="taskDate" required></div><div><label class="form-label" for="taskTime">Time (optional)</label><input class="field" type="time" id="taskTime"></div></div>
+   <div><label class="form-label">Priority</label><div class="segment" id="priorityChoices"><button type="button" data-priority="High">🔴 High</button><button type="button" class="active" data-priority="Medium">➖ Medium</button><button type="button" data-priority="Low">↓ Low</button></div></div>
+   <div><label class="form-label">Category</label><div class="category-grid" id="categoryChoices">
+    <button type="button" class="category-choice active" data-category="Study"><span>〈/〉</span>Study</button><button type="button" class="category-choice" data-category="College"><span>🎓</span>College</button><button type="button" class="category-choice" data-category="Personal"><span>⌂</span>Personal</button><button type="button" class="category-choice" data-category="Health"><span>✚</span>Health</button><button type="button" class="category-choice" data-category="Gaming"><span>🎮</span>Gaming</button><button type="button" class="category-choice" data-category="Work"><span>▣</span>Work</button><button type="button" class="category-choice" data-category="Other"><span>•••</span>Other</button>
+   </div></div>
+   <div><label class="form-label" for="taskRepeat">Repeat</label><select class="field" id="taskRepeat"><option value="none">Does not repeat</option><option value="daily">Every day</option><option value="weekly">Every week</option><option value="monthly">Every month</option></select></div>
+   <div class="panel" style="padding:12px;margin:0;background:#111521"><div class="setting-row" style="padding:0;border:0"><div class="setting-icon">♧</div><div class="setting-copy"><strong>Reminder</strong><small>Best effort while the app is open</small></div><button type="button" id="reminderToggle" class="switch" aria-label="Toggle reminder"></button></div><div id="reminderOptions" class="hidden" style="margin-top:12px"><label class="form-label" for="reminderLead">Remind me</label><select class="field" id="reminderLead"><option value="0">At task time</option><option value="5">5 minutes before</option><option value="10" selected>10 minutes before</option><option value="30">30 minutes before</option><option value="60">1 hour before</option></select><p style="font-size:11px;color:var(--muted);margin:8px 0 0">Browser reminders are not guaranteed if DayFlow is closed or your phone restricts background activity.</p></div></div>
+   <button class="btn primary" type="submit" id="submitBtn" style="padding:14px">✓ Save task</button><button type="button" class="btn hidden" id="cancelEdit">Cancel editing</button>
+  </form>
+ </section>
+</main>
+
+<main id="page-calendar" class="page hidden">
+ <div class="page-heading"><h2>Calendar</h2><p>Plan, track, and stay productive.</p></div>
+ <section class="panel">
+  <div class="segment" id="calendarModes"><button class="active" data-mode="day">Day</button><button data-mode="week">Week</button><button data-mode="month">Month</button></div>
+  <div class="week-strip" id="weekStrip"></div>
+  <div class="panel-title"><h3 id="calendarDateTitle">Today's schedule</h3><button class="btn small" id="calendarToday">Today</button></div>
+  <div id="calendarContent" class="calendar-list"></div>
+  <button class="btn primary" style="width:100%;margin-top:14px" data-go="add">＋ Add task to this date</button>
+ </section>
+</main>
+
+<main id="page-focus" class="page hidden">
+ <div class="page-heading"><h2>Focus timer</h2><p>Small steps lead to big results.</p></div>
+ <section class="panel">
+  <div class="segment" id="timerModes"><button class="active" data-minutes="25" data-label="Focus session">Pomodoro</button><button data-minutes="5" data-label="Short break">Short break</button><button data-minutes="15" data-label="Long break">Long break</button></div>
+  <div class="timer-wrap"><div class="timer-ring" id="timerRing"><div class="timer-inner"><div class="clock" id="focusClock">25:00</div><div class="timer-sub" id="timerLabel">Focus session</div></div></div></div>
+  <div class="timer-controls"><button class="btn primary" id="focusStart">▶ Start</button><button class="btn" id="focusReset">↻ Reset</button></div>
+  <div class="panel" style="margin:15px 0 0;padding:13px;background:#10131f"><strong>Current session</strong><p style="margin:7px 0 0;color:var(--muted);font-size:12px">Keep DayFlow open while the timer runs. When it finishes, take a breath before starting the next session.</p></div>
+ </section>
+</main>
+
+<main id="page-notes" class="page hidden">
+ <div class="page-heading"><h2>Daily notes</h2><p>Capture ideas, reminders, and thoughts.</p></div>
+ <section class="panel">
+  <div class="panel-title"><h3>Today's note</h3><span class="count" id="noteStatus">Auto-saved</span></div>
+  <div class="note-tools"><button class="btn small" data-insert="**bold**">B</button><button class="btn small" data-insert="- ">• List</button><button class="btn small" id="clearNote">Clear note</button></div>
+  <textarea class="field note-editor" id="dailyNote" maxlength="5000" placeholder="Write what you want to focus on today…"></textarea>
+  <p class="count">Notes are saved on this device in this browser.</p>
+  <div class="panel-title" style="margin-top:22px"><h3>Quick notes</h3><button class="btn small primary" id="addQuickNote">＋ Add</button></div>
+  <div id="quickNotes"></div>
+ </section>
+</main>
+
+<main id="page-more" class="page hidden">
+ <div class="page-heading"><h2>More</h2><p>Backups, preferences, and app information.</p></div>
+ <section class="panel">
+  <button class="setting-row" style="width:100%;text-align:left;background:transparent;color:inherit;border-top:0;border-left:0;border-right:0" id="moreBackup"><div class="setting-icon">☁</div><div class="setting-copy"><strong>Backup data</strong><small>Export your tasks and notes</small></div><span>›</span></button>
+  <button class="setting-row" style="width:100%;text-align:left;background:transparent;color:inherit;border-top:0;border-left:0;border-right:0" id="moreRestore"><div class="setting-icon">↥</div><div class="setting-copy"><strong>Restore data</strong><small>Import a DayFlow backup file</small></div><span>›</span></button>
+  <div class="setting-row"><div class="setting-icon">▥</div><div class="setting-copy"><strong>Statistics</strong><small id="statisticsText">Your productivity at a glance</small></div></div>
+  <div class="setting-row"><div class="setting-icon">🔔</div><div class="setting-copy"><strong>Notifications</strong><small id="notificationText">Request browser permission for timer alerts</small></div><button class="btn small" id="enableNotifications">Enable</button></div>
+  <div class="setting-row"><div class="setting-icon">◐</div><div class="setting-copy"><strong>Appearance</strong><small>DayFlow dark theme</small></div><span class="tag">Dark</span></div>
+  <div class="setting-row"><div class="setting-icon">🛡</div><div class="setting-copy"><strong>Data & privacy</strong><small>Your tasks stay in this browser on this device. No account or paid API required.</small></div></div>
+  <div class="setting-row"><div class="setting-icon">ⓘ</div><div class="setting-copy"><strong>About DayFlow</strong><small>Version 3 · Free personal planner</small></div></div>
+  <button class="btn" id="resetApp" style="width:100%;margin-top:14px;color:#ff9ca5">Reset app data…</button>
+ </section>
+</main>
 <div class="footer">DAYFLOW · Simple tools for a calmer day</div>
 </div>
+
+<button class="fab" id="fab" aria-label="Add task">＋</button>
+<nav class="bottom-nav" aria-label="Main navigation">
+ <button class="nav-btn active" data-page="home"><span class="nav-icon">⌂</span>Home</button>
+ <button class="nav-btn" data-page="calendar"><span class="nav-icon">▦</span>Calendar</button>
+ <button class="nav-btn" data-page="focus"><span class="nav-icon">◴</span>Focus</button>
+ <button class="nav-btn" data-page="notes"><span class="nav-icon">▤</span>Notes</button>
+ <button class="nav-btn" data-page="more"><span class="nav-icon">⠿</span>More</button>
+</nav>
+
 <script>
-(function(){
+(()=> {
+'use strict';
 const $=id=>document.getElementById(id);
-const KEY='dayflow_tasks_v1', NOTE='dayflow_daily_note_v1';
-let tasks=[],filter='all',editingId=null;
-const localToday=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const KEY='dayflow_tasks_v1', NOTE='dayflow_daily_note_v1', QUICK='dayflow_quick_notes_v1';
+let tasks=[],filter='today',editingId=null,currentPage='home',selectedCategory='Study',selectedPriority='Medium';
+let selectedDate=localToday(),calendarMode='day',timerSeconds=1500,timerInitial=1500,timerInterval=null,timerRunning=false,reminderEnabled=false;
+const localToday=()=>{const d=new Date();return dateKey(d)};
+function dateKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 const safeLoad=()=>{try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x:[]}catch{return []}};
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(tasks))}catch{alert('Browser storage is full. Please export a backup.')}};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(tasks))}catch{alert('Storage is full. Please export a backup.')}};
 const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const prettyDate=s=>{if(!s)return '';const d=new Date(s+'T12:00:00');return d.toLocaleDateString(undefined,{month:'short',day:'numeric'})};
+const fullDate=s=>new Date(s+'T12:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 const isOverdue=t=>!t.done&&t.date&&t.date<localToday();
-function nextDate(date, repeat){
- const d = new Date((date || localToday()) + 'T12:00:00');
- if(repeat==='daily') d.setDate(d.getDate()+1);
- else if(repeat==='weekly') d.setDate(d.getDate()+7);
- else if(repeat==='monthly') { const day=d.getDate(); d.setDate(1); d.setMonth(d.getMonth()+1); const last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate(); d.setDate(Math.min(day,last)); }
- return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
+function nextDate(date,repeat){const d=new Date((date||localToday())+'T12:00:00');if(repeat==='daily')d.setDate(d.getDate()+1);else if(repeat==='weekly')d.setDate(d.getDate()+7);else if(repeat==='monthly'){const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+1);d.setDate(Math.min(day,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()))}return dateKey(d)}
+function showPage(page){currentPage=page;document.querySelectorAll('.page').forEach(p=>p.classList.toggle('hidden',p.id!=='page-'+page));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('fab').classList.toggle('hidden',page==='add');window.scrollTo({top:0,behavior:'smooth'});if(page==='calendar')renderCalendar();if(page==='more')renderMore();if(page==='notes')renderQuickNotes()}
+function resetForm(){editingId=null;$('taskForm').reset();$('taskDate').value=selectedDate||localToday();$('taskRepeat').value='none';selectedCategory='Study';selectedPriority='Medium';syncChoices();$('addHeading').textContent='Add task';$('submitBtn').textContent='✓ Save task';$('cancelEdit').classList.add('hidden');}
+function syncChoices(){document.querySelectorAll('[data-category]').forEach(b=>b.classList.toggle('active',b.dataset.category===selectedCategory));document.querySelectorAll('[data-priority]').forEach(b=>b.classList.toggle('active',b.dataset.priority===selectedPriority))}
+function startAdd(){resetForm();showPage('add');$('taskTitle').focus({preventScroll:true})}
 function render(){
- const today=localToday(),done=tasks.filter(t=>t.done).length,pending=tasks.length-done,overdue=tasks.filter(isOverdue).length;
- $('total').textContent=tasks.length;$('completed').textContent=done;$('pending').textContent=pending;$('overdue').textContent=overdue;
- const todays=tasks.filter(t=>t.date===today),todaysDone=todays.filter(t=>t.done).length,pct=todays.length?Math.round(todaysDone/todays.length*100):0;
+ const today=localToday(),done=tasks.filter(t=>t.done).length,overdue=tasks.filter(isOverdue).length;
+ $('total').textContent=tasks.length;$('completed').textContent=done;$('pending').textContent=tasks.length-done;$('overdue').textContent=overdue;
+ const todays=tasks.filter(t=>t.date===today),td=todays.filter(t=>t.done).length,pct=todays.length?Math.round(td/todays.length*100):0;
  $('progressText').textContent=pct+'% complete';$('progressBar').style.width=pct+'%';$('taskCount').textContent=tasks.length+' task'+(tasks.length===1?'':'s');
  const query=$('search').value.trim().toLowerCase();
  let list=tasks.filter(t=>{
   if(filter==='today'&&t.date!==today)return false;
-  if(filter==='active'&&t.done)return false;
-  if(filter==='completed'&&!t.done)return false;
-  if(filter==='high'&&t.priority!=='High')return false;
-  return !query||[t.title,t.notes,t.category,t.priority].join(' ').toLowerCase().includes(query);
+  if(filter==='upcoming'&&(!t.date||t.date<today||t.date>dateKey(new Date(Date.now()+7*86400000))))return false;
+  if(filter==='active'&&t.done)return false;if(filter==='completed'&&!t.done)return false;if(filter==='high'&&t.priority!=='High')return false;
+  return !query||[t.title,t.notes,t.category,t.priority].join(' ').toLowerCase().includes(query)
  });
  list.sort((a,b)=>(a.done-b.done)||(a.date||'9999').localeCompare(b.date||'9999')||(a.time||'99:99').localeCompare(b.time||'99:99')||({High:0,Medium:1,Low:2}[a.priority]-{High:0,Medium:1,Low:2}[b.priority]));
- $('taskList').innerHTML=list.length?list.map(t=>`<article class="task ${t.done?'done':''}">
- <button class="check" data-action="toggle" data-id="${t.id}" aria-label="Mark task ${t.done?'pending':'completed'}">${t.done?'✓':''}</button>
- <div class="task-main"><div class="task-name">${escapeHTML(t.title)}</div>${t.notes?`<div style="font-size:12px;color:var(--muted);margin-top:4px;overflow-wrap:anywhere">${escapeHTML(t.notes)}</div>`:''}
- <div class="task-meta"><span class="tag">${escapeHTML(t.category)}</span><span class="tag ${t.priority.toLowerCase()}">${escapeHTML(t.priority)}</span>${t.repeat&&t.repeat!=='none'?`<span class="tag">↻ ${({daily:'Daily',weekly:'Weekly',monthly:'Monthly'}[t.repeat]||'Repeats')}</span>`:''}${t.date?`<span class="tag ${isOverdue(t)?'late':''}">${isOverdue(t)?'Overdue · ':''}${prettyDate(t.date)}${t.time?' · '+escapeHTML(t.time):''}</span>`:''}</div></div>
- <div class="task-actions"><button class="icon-btn" data-action="edit" data-id="${t.id}" aria-label="Edit task">✎</button><button class="icon-btn" data-action="delete" data-id="${t.id}" aria-label="Delete task">×</button></div></article>`).join(''):`<div class="empty"><div class="emoji">✦</div><div>${query?'No matching tasks.':filter==='completed'?'No completed tasks yet.':'Nothing here right now.'}</div><small>Add a task above to get started.</small></div>`;
- const upcoming=tasks.filter(t=>!t.done&&t.date>=today&&t.date<=new Date(Date.now()+7*86400000).toISOString().slice(0,10)).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||'')).slice(0,5);
- $('upcoming').innerHTML=upcoming.length?upcoming.map(t=>`<div class="quick-item"><span class="dot" style="background:${t.priority==='High'?'var(--red)':t.priority==='Low'?'var(--green)':'var(--accent)'}"></span><div><strong>${escapeHTML(t.title)}</strong><small>${prettyDate(t.date)}${t.time?' · '+escapeHTML(t.time):''} · ${escapeHTML(t.category)}</small></div></div>`).join(''):'<div class="empty" style="padding:12px 0">No upcoming tasks 🎉</div>';
+ $('taskList').innerHTML=list.length?list.map(t=>`<article class="task ${t.done?'done':''}"><button class="check" data-action="toggle" data-id="${escapeHTML(t.id)}" aria-label="Toggle task">${t.done?'✓':''}</button><div class="task-main"><div class="task-name">${escapeHTML(t.title)}</div>${t.notes?`<div class="task-note">${escapeHTML(t.notes)}</div>`:''}<div class="task-meta"><span class="tag">${escapeHTML(t.category||'Other')}</span><span class="tag ${(t.priority||'Medium').toLowerCase()}">${escapeHTML(t.priority||'Medium')}</span>${t.repeat&&t.repeat!=='none'?`<span class="tag">↻ ${({daily:'Daily',weekly:'Weekly',monthly:'Monthly'}[t.repeat]||'Repeats')}</span>`:''}${t.date?`<span class="tag ${isOverdue(t)?'late':''}">${isOverdue(t)?'Overdue · ':''}${prettyDate(t.date)}${t.time?' · '+escapeHTML(t.time):''}</span>`:''}</div></div><div class="task-actions"><button class="icon-btn" data-action="edit" data-id="${escapeHTML(t.id)}" aria-label="Edit task">⋮</button></div></article>`).join(''):`<div class="empty"><div class="emoji">✦</div><div>${query?'No matching tasks.':filter==='completed'?'No completed tasks yet.':'Nothing here right now.'}</div><small>Add a task above to get started.</small></div>`;
+ const upcoming=tasks.filter(t=>!t.done&&t.date>=today&&t.date<=dateKey(new Date(Date.now()+7*86400000))).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||'')).slice(0,6);
+ $('upcoming').innerHTML=upcoming.length?upcoming.map(t=>`<div class="quick-item"><span class="dot" style="background:${t.priority==='High'?'var(--red)':t.priority==='Low'?'var(--green)':'var(--purple)'}"></span><div><strong>${escapeHTML(t.title)}</strong><small>${prettyDate(t.date)}${t.time?' · '+escapeHTML(t.time):''} · ${escapeHTML(t.category||'Other')}</small></div></div>`).join(''):'<div class="empty" style="padding:12px 0">No upcoming tasks 🎉</div>';
+ if(currentPage==='calendar')renderCalendar();if(currentPage==='more')renderMore();
 }
-function resetForm(){editingId=null;$('taskForm').reset();$('taskDate').value=localToday();$('submitBtn').textContent='＋ Add task'}
-$('taskForm').addEventListener('submit',e=>{e.preventDefault();const title=$('taskTitle').value.trim();if(!title)return;
- const item={id:editingId||String(Date.now())+Math.random().toString(16).slice(2),title,notes:$('taskNotes').value.trim(),date:$('taskDate').value, time:$('taskTime').value,category:$('taskCategory').value,priority:$('taskPriority').value,repeat:$('taskRepeat').value,done:false,created:Date.now()};
- if(editingId){const old=tasks.find(t=>t.id===editingId);if(old){item.done=old.done;item.created=old.created;tasks=tasks.map(t=>t.id===editingId?item:t)}}else tasks.push(item);
- save();resetForm();render();$('taskTitle').focus();
-});
-$('taskList').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const id=b.dataset.id,act=b.dataset.action,t=tasks.find(x=>x.id===id);if(!t)return;
- if(act==='toggle'){
-  const wasDone=t.done; t.done=!t.done;
-  if(!wasDone && t.repeat && t.repeat!=='none'){
-    const next={...t,id:String(Date.now())+Math.random().toString(16).slice(2),date:nextDate(t.date,t.repeat),done:false,created:Date.now()};
-    tasks.push(next);
-  }
-  save();render()
+function renderCalendar(){
+ const base=new Date(selectedDate+'T12:00:00'),strip=$('weekStrip');
+ const start=new Date(base);start.setDate(base.getDate()-start.getDay());
+ strip.innerHTML=Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(start.getDate()+i);const k=dateKey(d);return `<button class="day-pick ${k===selectedDate?'active':''}" data-date="${k}">${d.toLocaleDateString(undefined,{weekday:'short'})}<strong>${d.getDate()}</strong></button>`}).join('');
+ $('calendarDateTitle').textContent=calendarMode==='month'?base.toLocaleDateString(undefined,{month:'long',year:'numeric'}):fullDate(selectedDate);
+ let list=tasks.filter(t=>!t.date?false:calendarMode==='day'?t.date===selectedDate:calendarMode==='week'?t.date>=dateKey(start)&&t.date<=dateKey(new Date(start.getFullYear(),start.getMonth(),start.getDate()+6)):t.date.slice(0,7)===selectedDate.slice(0,7));
+ list.sort((a,b)=>(a.time||'99:99').localeCompare(b.time||'99:99'));
+ $('calendarContent').innerHTML=list.length?list.map(t=>`<div class="calendar-event"><div class="event-time">${t.time?escapeHTML(new Date('2000-01-01T'+t.time).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})):'Any time'}</div><div class="event-content" style="border-color:${t.done?'var(--green)':t.priority==='High'?'var(--red)':t.category==='College'?'var(--blue)':'var(--purple)'}"><strong>${t.done?'✓ ':''}${escapeHTML(t.title)}</strong><small>${escapeHTML(t.category||'Other')} · ${escapeHTML(t.priority||'Medium')}${t.done?' · Completed':''}</small><div style="margin-top:7px;display:flex;gap:7px"><button class="btn small" data-cal-action="toggle" data-id="${escapeHTML(t.id)}">${t.done?'Mark pending':'Complete'}</button><button class="btn small" data-cal-action="edit" data-id="${escapeHTML(t.id)}">Edit</button></div></div></div>`).join(''):`<div class="empty"><div class="emoji">▦</div><div>No tasks scheduled here.</div><small>Add a task for ${prettyDate(selectedDate)}.</small></div>`;
+ document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===calendarMode));
 }
- if(act==='delete'){if(confirm('Delete this task?')){tasks=tasks.filter(x=>x.id!==id);if(editingId===id)resetForm();save();render()}}
- if(act==='edit'){editingId=id;$('taskTitle').value=t.title;$('taskNotes').value=t.notes||'';$('taskDate').value=t.date||localToday();$('taskTime').value=t.time||'';$('taskCategory').value=t.category||'Personal';$('taskPriority').value=t.priority||'Medium';$('taskRepeat').value=t.repeat||'none';$('submitBtn').textContent='✓ Save changes';$('taskTitle').focus();window.scrollTo({top:0,behavior:'smooth'})}
-});
-$('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;filter=b.dataset.filter;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));render()});
+function renderQuickNotes(){let q=[];try{q=JSON.parse(localStorage.getItem(QUICK)||'[]')}catch{};$('quickNotes').innerHTML=q.length?q.map((n,i)=>`<div class="quick-note"><span>▤ ${escapeHTML(n)}</span><button class="icon-btn" data-q-delete="${i}" aria-label="Delete quick note">×</button></div>`).join(''):'<p class="count">No quick notes yet. Add ideas you want to remember.</p>'}
+function renderMore(){$('statisticsText').textContent=`${tasks.length} tasks · ${tasks.filter(t=>t.done).length} completed · ${tasks.filter(isOverdue).length} overdue`;$('notificationText').textContent=('Notification' in window)?(Notification.permission==='granted'?'Browser notifications enabled':Notification.permission==='denied'?'Notifications blocked in browser settings':'Request browser permission for timer alerts'):'Notifications are not supported in this browser';$('enableNotifications').textContent=('Notification' in window&&Notification.permission==='granted')?'Enabled':'Enable'}
+function toggleTask(id){const t=tasks.find(x=>String(x.id)===String(id));if(!t)return;const wasDone=t.done;t.done=!t.done;if(!wasDone&&t.repeat&&t.repeat!=='none'){tasks.push({...t,id:String(Date.now())+Math.random().toString(16).slice(2),date:nextDate(t.date,t.repeat),done:false,created:Date.now()})}save();render()}
+function editTask(id){const t=tasks.find(x=>String(x.id)===String(id));if(!t)return;editingId=t.id;$('taskTitle').value=t.title;$('taskNotes').value=t.notes||'';$('taskDate').value=t.date||localToday();$('taskTime').value=t.time||'';$('taskRepeat').value=t.repeat||'none';selectedCategory=t.category||'Other';selectedPriority=t.priority||'Medium';syncChoices();$('addHeading').textContent='Edit task';$('submitBtn').textContent='✓ Save changes';$('cancelEdit').classList.remove('hidden');showPage('add');}
+$('taskForm').addEventListener('submit',e=>{e.preventDefault();const title=$('taskTitle').value.trim();if(!title)return;const old=editingId?tasks.find(t=>String(t.id)===String(editingId)):null;const item={id:editingId||String(Date.now())+Math.random().toString(16).slice(2),title,notes:$('taskNotes').value.trim(),date:$('taskDate').value,time:$('taskTime').value,category:selectedCategory,priority:selectedPriority,repeat:$('taskRepeat').value,done:old?old.done:false,created:old?old.created:Date.now()};if(editingId)tasks=tasks.map(t=>String(t.id)===String(editingId)?item:t);else tasks.push(item);save();resetForm();render();showPage('home');});
+$('cancelEdit').addEventListener('click',()=>{resetForm();showPage('home')});
+$('priorityChoices').addEventListener('click',e=>{const b=e.target.closest('[data-priority]');if(b){selectedPriority=b.dataset.priority;syncChoices()}});
+$('categoryChoices').addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(b){selectedCategory=b.dataset.category;syncChoices()}});
+$('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;filter=b.dataset.filter;document.querySelectorAll('#filters [data-filter]').forEach(x=>x.classList.toggle('active',x===b));render()});
 $('search').addEventListener('input',render);
+$('taskList').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const id=b.dataset.id,act=b.dataset.action;if(act==='toggle')toggleTask(id);else if(act==='edit'){const t=tasks.find(x=>String(x.id)===String(id));if(t){if(confirm(`Edit “${t.title}”?\nChoose OK to edit, Cancel to delete or keep it.`))editTask(id);else if(confirm('Delete this task?')){tasks=tasks.filter(x=>String(x.id)!==String(id));save();render()}}}});
 $('clearDone').addEventListener('click',()=>{const n=tasks.filter(t=>t.done).length;if(!n)return alert('No completed tasks to clear.');if(confirm(`Delete ${n} completed task(s)?`)){tasks=tasks.filter(t=>!t.done);save();render()}});
-$('dailyNote').value=localStorage.getItem(NOTE)||'';$('dailyNote').addEventListener('input',()=>{try{localStorage.setItem(NOTE,$('dailyNote').value)}catch{}});
-$('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({app:'DayFlow',version:1,tasks,note:$('dailyNote').value},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='dayflow-backup-'+localToday()+'.json';a.click();URL.revokeObjectURL(url)});
-$('importBtn').addEventListener('click',()=>$('importFile').click());
-$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text()),incoming=Array.isArray(data)?data:data.tasks;if(!Array.isArray(incoming))throw Error();if(confirm('Restore this backup? Current tasks will be replaced.')){tasks=incoming.filter(t=>t&&typeof t.title==='string').map(t=>({...t,id:String(t.id||Date.now()+Math.random())}));if(typeof data.note==='string'){$('dailyNote').value=data.note;localStorage.setItem(NOTE,data.note)}save();render();alert('Backup restored.')}}catch{alert('This backup file is not valid.')}e.target.value=''});
-let focusSeconds=25*60, focusInterval=null, focusRunning=false;
-function paintFocus(){const m=Math.floor(focusSeconds/60),s=focusSeconds%60;$('focusClock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
-function stopFocus(){if(focusInterval)clearInterval(focusInterval);focusInterval=null;focusRunning=false;$('focusStart').textContent='▶ Start';}
-$('focusStart').addEventListener('click',()=>{
- if(focusRunning){stopFocus();return;}
- if(focusSeconds<=0)focusSeconds=25*60;
- focusRunning=true;$('focusStart').textContent='Ⅱ Pause';
- focusInterval=setInterval(()=>{focusSeconds--;paintFocus();if(focusSeconds<=0){stopFocus();if('Notification' in window && Notification.permission==='granted')new Notification('DayFlow Focus Timer',{body:'Timer finished. Take a breath and review your progress.'});alert('Focus timer finished! Take a short break.');}},1000);
-});
-$('focusReset').addEventListener('click',()=>{stopFocus();focusSeconds=25*60;paintFocus()});
-document.querySelectorAll('[data-minutes]').forEach(b=>b.addEventListener('click',()=>{stopFocus();focusSeconds=Number(b.dataset.minutes)*60;document.querySelectorAll('[data-minutes]').forEach(x=>x.classList.toggle('active',x===b));paintFocus()}));
-if('Notification' in window){
- const oldRender=render;
- render=function(){oldRender();};
-}
-const now=new Date();$('todayDate').textContent=now.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});
-const hour=now.getHours();$('greeting').textContent=hour<12?'Good morning.':hour<17?'Make today count.':'Good evening.';
-$('taskDate').value=localToday();tasks=safeLoad();render();
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>b.dataset.go==='add'?startAdd():showPage(b.dataset.go)));
+$('fab').addEventListener('click',startAdd);
+$('weekStrip').addEventListener('click',e=>{const b=e.target.closest('[data-date]');if(!b)return;selectedDate=b.dataset.date;$('taskDate').value=selectedDate;renderCalendar()});
+$('calendarModes').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(!b)return;calendarMode=b.dataset.mode;renderCalendar()});
+$('calendarToday').addEventListener('click',()=>{selectedDate=localToday();renderCalendar()});
+$('calendarContent').addEventListener('click',e=>{const b=e.target.closest('[data-cal-action]');if(!b)return;const id=b.dataset.id;if(b.dataset.calAction==='toggle')toggleTask(id);else editTask(id)});
+$('dailyNote').value=localStorage.getItem(NOTE)||'';$('dailyNote').addEventListener('input',()=>{try{localStorage.setItem(NOTE,$('dailyNote').value);$('noteStatus').textContent='Saved'}catch{}});
+$('clearNote').addEventListener('click',()=>{if(confirm('Clear today’s note?')){$('dailyNote').value='';localStorage.removeItem(NOTE);$('noteStatus').textContent='Cleared'}});
+document.querySelectorAll('[data-insert]').forEach(b=>b.addEventListener('click',()=>{const el=$('dailyNote'),s=el.selectionStart,e=el.selectionEnd;el.setRangeText(b.dataset.insert,s,e,'end');el.dispatchEvent(new Event('input'))}));
+$('addQuickNote').addEventListener('click',()=>{const n=prompt('Write a quick note:');if(!n||!n.trim())return;let q=[];try{q=JSON.parse(localStorage.getItem(QUICK)||'[]')}catch{}q.unshift(n.trim());localStorage.setItem(QUICK,JSON.stringify(q.slice(0,30)));renderQuickNotes()});
+$('quickNotes').addEventListener('click',e=>{const b=e.target.closest('[data-q-delete]');if(!b)return;let q=[];try{q=JSON.parse(localStorage.getItem(QUICK)||'[]')}catch{}q.splice(Number(b.dataset.qDelete),1);localStorage.setItem(QUICK,JSON.stringify(q));renderQuickNotes()});
+function backup(){const data={app:'DayFlow',version:3,tasks,note:$('dailyNote').value,quickNotes:JSON.parse(localStorage.getItem(QUICK)||'[]')};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='dayflow-backup-'+localToday()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+$('exportBtn').addEventListener('click',backup);$('moreBackup').addEventListener('click',backup);$('importBtn').addEventListener('click',()=>$('importFile').click());$('moreRestore').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text()),incoming=Array.isArray(data)?data:data.tasks;if(!Array.isArray(incoming))throw Error();if(confirm('Restore this backup? Current tasks will be replaced.')){tasks=incoming.filter(t=>t&&typeof t.title==='string').map(t=>({...t,id:String(t.id||Date.now()+Math.random()),category:t.category||'Other',priority:t.priority||'Medium'}));if(typeof data.note==='string'){$('dailyNote').value=data.note;localStorage.setItem(NOTE,data.note)}if(Array.isArray(data.quickNotes))localStorage.setItem(QUICK,JSON.stringify(data.quickNotes));save();render();renderQuickNotes();alert('Backup restored.')} }catch{alert('This backup file is not valid.')}e.target.value=''});
+function paintTimer(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;$('focusClock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');const progress=timerInitial?((timerInitial-timerSeconds)/timerInitial)*100:0;$('timerRing').style.setProperty('--timer-progress',progress+'%')}
+function stopTimer(){if(timerInterval)clearInterval(timerInterval);timerInterval=null;timerRunning=false;$('focusStart').textContent='▶ Start'}
+$('focusStart').addEventListener('click',()=>{if(timerRunning){stopTimer();return}if(timerSeconds<=0)timerSeconds=timerInitial;timerRunning=true;$('focusStart').textContent='Ⅱ Pause';timerInterval=setInterval(()=>{timerSeconds--;paintTimer();if(timerSeconds<=0){stopTimer();if('Notification'in window&&Notification.permission==='granted')new Notification('DayFlow',{body:'Focus timer finished. Take a short break.'});alert('Timer finished! Take a short break.')}},1000)});
+$('focusReset').addEventListener('click',()=>{stopTimer();timerSeconds=timerInitial;paintTimer()});
+$('timerModes').addEventListener('click',e=>{const b=e.target.closest('[data-minutes]');if(!b)return;stopTimer();timerInitial=Number(b.dataset.minutes)*60;timerSeconds=timerInitial;$('timerLabel').textContent=b.dataset.label;document.querySelectorAll('#timerModes [data-minutes]').forEach(x=>x.classList.toggle('active',x===b));paintTimer()});
+$('reminderToggle').addEventListener('click',async()=>{reminderEnabled=!reminderEnabled;$('reminderToggle').classList.toggle('on',reminderEnabled);$('reminderOptions').classList.toggle('hidden',!reminderEnabled);if(reminderEnabled&&'Notification'in window&&Notification.permission==='default'){try{await Notification.requestPermission()}catch{}}});
+$('enableNotifications').addEventListener('click',async()=>{if(!('Notification'in window)){alert('This browser does not support notifications.');return}try{const p=await Notification.requestPermission();renderMore();alert(p==='granted'?'Notifications enabled for timer alerts.':'Permission was not granted. You can change it in browser site settings.')}catch{alert('Could not request notification permission in this browser.')}});
+$('resetApp').addEventListener('click',()=>{if(confirm('Delete all DayFlow tasks, notes, and quick notes from this browser? Export a backup first if you need your data.')){tasks=[];localStorage.removeItem(KEY);localStorage.removeItem(NOTE);localStorage.removeItem(QUICK);$('dailyNote').value='';render();renderQuickNotes();alert('DayFlow data reset.')}});
+const now=new Date();$('todayDate').textContent=now.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});$('greeting').textContent=now.getHours()<12?'Good morning.':now.getHours()<17?'Make today count.':'Good evening.';
+tasks=safeLoad();$('taskDate').value=localToday();selectedDate=localToday();syncChoices();render();renderCalendar();renderQuickNotes();paintTimer();showPage('home');
 })();
 </script>
-<script>
-if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-}
-</script>
+<script>if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));</script>
 </body>
 </html>
