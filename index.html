@@ -25,6 +25,23 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:man
 .timer-wrap{text-align:center;padding:16px 0 10px}.timer-ring{width:230px;height:230px;border-radius:50%;margin:5px auto 20px;display:grid;place-items:center;background:conic-gradient(#8955ff var(--timer-progress,0%),#272b3e 0);position:relative}.timer-ring:before{content:"";position:absolute;inset:10px;border-radius:50%;background:#141724}.timer-inner{position:relative;z-index:1}.clock{font-size:45px;font-weight:800;letter-spacing:1px;font-variant-numeric:tabular-nums}.timer-sub{color:var(--muted);font-size:13px}.timer-controls{display:grid;grid-template-columns:1fr 1fr;gap:9px}.note-editor{min-height:180px;resize:vertical;line-height:1.7}.note-tools{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.quick-note{display:flex;align-items:center;gap:10px;padding:12px;background:#191d2b;border:1px solid #2b3042;border-radius:12px;margin-top:8px}.quick-note span{flex:1;overflow-wrap:anywhere}.setting-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.setting-row:last-child{border-bottom:0}.setting-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#2a2149;font-size:21px;flex-shrink:0}.setting-row .setting-copy{flex:1;min-width:0}.setting-row strong{display:block;font-size:14px}.setting-row small{display:block;color:var(--muted);font-size:12px;margin-top:2px}.switch{width:44px;height:25px;border:0;border-radius:99px;background:#454b60;padding:3px}.switch:after{content:"";display:block;width:19px;height:19px;border-radius:50%;background:#fff;transition:transform .2s}.switch.on{background:var(--purple)}.switch.on:after{transform:translateX(19px)}.footer{text-align:center;color:#727a94;font-size:10px;margin:22px 0 5px}
 @media(min-width:650px){.app{padding:24px 18px 30px}.home-columns{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:start}.stats{gap:10px}.stat{padding:14px}.fab{bottom:95px}}
 @media(max-width:390px){.app{padding:14px 10px 22px}.top-actions .btn{padding:8px;font-size:12px}.brand h1{font-size:20px}.brand p{font-size:10px}.stats{gap:5px}.stat{padding:10px 7px}.stat strong{font-size:24px}.stat .label{font-size:10px}.hero{align-items:flex-start;flex-direction:column}.date-pill{align-self:flex-start}.panel,.progress-card{padding:13px}.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.timer-ring{width:210px;height:210px}.clock{font-size:40px}}
+
+/* DayFlow v3.1 polish: screen-specific headers, full filter visibility, safer spacing */
+.app[data-page="calendar"] .top,.app[data-page="focus"] .top,.app[data-page="notes"] .top,.app[data-page="more"] .top,.app[data-page="add"] .top{display:none}
+.app[data-page="calendar"],.app[data-page="focus"],.app[data-page="notes"],.app[data-page="more"],.app[data-page="add"]{padding-top:20px}
+.date-pill{min-height:38px;display:flex;align-items:center;justify-content:center;flex-shrink:0;max-width:100%}
+.task-footer-actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:13px}
+.task-footer-actions .btn{width:100%}
+.fab{bottom:calc(92px + env(safe-area-inset-bottom));right:max(16px,calc((100vw - 720px)/2));}
+body[data-page="home"] .fab{display:none}
+.filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible;gap:7px;margin:14px 0 11px;padding:0}
+.filter{width:100%;min-width:0;text-align:center;padding:10px 4px;font-size:12px}
+.home-columns{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:0}
+.home-columns>.panel{min-width:0}
+.home-columns>div{min-width:0}
+@media(max-width:560px){.home-columns{display:block}.home-columns>div{display:block}.app{padding-left:12px;padding-right:12px}.top{margin-bottom:20px}.top-actions{gap:6px}.top-actions .btn{padding:9px 10px}.hero{align-items:flex-start;flex-direction:column}.date-pill{align-self:flex-start}.stats{gap:7px}.stat{border-radius:15px}.stat .label{font-size:10px}.filters{grid-template-columns:repeat(3,minmax(0,1fr))}.timer-ring{width:min(230px,68vw);height:min(230px,68vw)}.clock{font-size:clamp(34px,10vw,45px)}.panel,.progress-card{padding:14px}.page-heading h2{font-size:27px}}
+@media(min-width:561px){.task-footer-actions{grid-template-columns:1fr auto}.task-footer-actions #clearDone{width:auto}}
+
 </style>
 </head>
 <body>
@@ -46,7 +63,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:man
    <div class="filters" id="filters"><button class="filter active" data-filter="today">Today</button><button class="filter" data-filter="upcoming">Upcoming</button><button class="filter" data-filter="high">Important</button><button class="filter" data-filter="all">All</button><button class="filter" data-filter="active">Pending</button><button class="filter" data-filter="completed">Done</button></div>
    <input class="field search" id="search" placeholder="⌕  Search tasks…">
    <div class="task-list" id="taskList"></div>
-   <button class="btn small" id="clearDone" style="margin-top:12px">Clear completed tasks</button>
+   <div class="task-footer-actions"><button class="btn primary" id="homeAddTask" data-go="add">＋ Add task</button><button class="btn small" id="clearDone">Clear completed tasks</button></div>
   </section>
   <div>
    <section class="panel"><div class="panel-title"><h3>Coming up</h3><span class="count">7 days</span></div><div class="quick-list" id="upcoming"></div></section>
@@ -137,8 +154,9 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:man
 const $=id=>document.getElementById(id);
 const KEY='dayflow_tasks_v1', NOTE='dayflow_daily_note_v1', QUICK='dayflow_quick_notes_v1';
 let tasks=[],filter='today',editingId=null,currentPage='home',selectedCategory='Study',selectedPriority='Medium';
-let selectedDate=localToday(),calendarMode='day',timerSeconds=1500,timerInitial=1500,timerInterval=null,timerRunning=false,reminderEnabled=false;
+let selectedDate='',calendarMode='day',timerSeconds=1500,timerInitial=1500,timerInterval=null,timerRunning=false,reminderEnabled=false;
 const localToday=()=>{const d=new Date();return dateKey(d)};
+selectedDate=localToday();
 function dateKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 const safeLoad=()=>{try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(x)?x:[]}catch{return []}};
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(tasks))}catch{alert('Storage is full. Please export a backup.')}};
@@ -147,7 +165,7 @@ const prettyDate=s=>{if(!s)return '';const d=new Date(s+'T12:00:00');return d.to
 const fullDate=s=>new Date(s+'T12:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 const isOverdue=t=>!t.done&&t.date&&t.date<localToday();
 function nextDate(date,repeat){const d=new Date((date||localToday())+'T12:00:00');if(repeat==='daily')d.setDate(d.getDate()+1);else if(repeat==='weekly')d.setDate(d.getDate()+7);else if(repeat==='monthly'){const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+1);d.setDate(Math.min(day,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()))}return dateKey(d)}
-function showPage(page){currentPage=page;document.querySelectorAll('.page').forEach(p=>p.classList.toggle('hidden',p.id!=='page-'+page));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('fab').classList.toggle('hidden',page==='add');window.scrollTo({top:0,behavior:'smooth'});if(page==='calendar')renderCalendar();if(page==='more')renderMore();if(page==='notes')renderQuickNotes()}
+function showPage(page){currentPage=page;document.querySelector('.app').dataset.page=page;document.body.dataset.page=page;document.querySelectorAll('.page').forEach(p=>p.classList.toggle('hidden',p.id!=='page-'+page));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('fab').classList.toggle('hidden',page==='add');window.scrollTo({top:0,behavior:'smooth'});if(page==='calendar')renderCalendar();if(page==='more')renderMore();if(page==='notes')renderQuickNotes()}
 function resetForm(){editingId=null;$('taskForm').reset();$('taskDate').value=selectedDate||localToday();$('taskRepeat').value='none';selectedCategory='Study';selectedPriority='Medium';syncChoices();$('addHeading').textContent='Add task';$('submitBtn').textContent='✓ Save task';$('cancelEdit').classList.add('hidden');}
 function syncChoices(){document.querySelectorAll('[data-category]').forEach(b=>b.classList.toggle('active',b.dataset.category===selectedCategory));document.querySelectorAll('[data-priority]').forEach(b=>b.classList.toggle('active',b.dataset.priority===selectedPriority))}
 function startAdd(){resetForm();showPage('add');$('taskTitle').focus({preventScroll:true})}
