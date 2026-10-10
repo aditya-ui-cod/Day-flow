@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "DayFlow \u2014 Daily Planner",
+  "name": "DayFlow — Daily Planner",
   "short_name": "DayFlow",
-  "description": "DayFlow v4 \u2014 daily tasks, calendar, focus timer, notes and productivity tools.",
+  "description": "DayFlow v4 — daily tasks, calendar, focus timer, notes and productivity tools.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -24,7 +24,7 @@
       "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ]
 }
