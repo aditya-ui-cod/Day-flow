@@ -253,6 +253,9 @@ body{background:radial-gradient(ellipse at 50% -10%,#27204b 0,transparent 44%),r
 @media(max-width:390px){.app{padding-left:10px;padding-right:10px}.top-actions .btn{padding:9px 8px;font-size:12px}.brand h1{font-size:21px}.brand p{font-size:9px}.stats{gap:6px}.stat{padding:11px 7px;border-radius:16px}.stat .label{font-size:9px}.stat strong{font-size:22px}.progress-card,.panel{padding:14px;border-radius:21px}.page-heading h2{font-size:24px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
+/* v25: keep backup/restore available in More, remove header buttons */
+#exportBtn, #importBtn { display: none !important; }
+.top-actions { display: none !important; }
 </style></head>
 <body><div class="app" id="app">
 <header class="top"><button class="home-head-btn" id="homeMenu" aria-label="Open More" style="display:none">☰</button><div class="brand"><div class="logo">✓</div><div><h1>DayFlow</h1><p>Your day, under control · v4</p></div></div><div class="top-actions"><button class="btn" id="exportBtn">↓ Backup</button><button class="btn" id="importBtn">↑ Restore</button><button class="home-head-btn" id="homeSearch" aria-label="Search tasks" style="display:none">⌕</button><input id="importFile" type="file" accept="application/json" hidden></div></header>
