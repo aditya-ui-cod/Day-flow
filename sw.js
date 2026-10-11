@@ -1,4 +1,4 @@
-const CACHE = 'dayflow-study-planner-v31';
+const CACHE = 'dayflow-study-planner-v32';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', event => {
