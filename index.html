@@ -266,6 +266,16 @@ body{background:radial-gradient(ellipse at 50% -10%,#27204b 0,transparent 44%),r
 body.home-view .top .brand{display:none!important}
 body.home-view .top{justify-content:flex-start!important;margin-bottom:12px!important;min-height:42px}
 body.home-view .top-actions{display:none!important}
+
+/* v30: remove the branded top header from every page and reclaim its space.
+   Home keeps only its menu button; other pages start directly at their page heading. */
+body:not(.home-view) .top{display:none!important}
+body.home-view .top>.brand{display:none!important}
+body.home-view .top{display:flex!important;min-height:36px;margin:0 0 8px!important;padding:0!important;border:0!important;justify-content:flex-start!important;align-items:center!important}
+body.home-view .app{padding-top:6px!important}
+body.home-view .top-actions{display:none!important}
+body.home-view .home-head-btn{display:grid!important;place-items:center;width:38px;height:36px;border:0;background:transparent;color:#f4f5ff;font-size:27px;padding:0}
+
 </style></head>
 <body><div class="app" id="app">
 <header class="top"><button class="home-head-btn" id="homeMenu" aria-label="Open More" style="display:none">☰</button><div class="brand"><div class="logo">✓</div><div><h1>DayFlow</h1><p>Your day, under control · v4</p></div></div><div class="top-actions"><button class="btn" id="exportBtn">↓ Backup</button><button class="btn" id="importBtn">↑ Restore</button><button class="home-head-btn" id="homeSearch" aria-label="Search tasks" style="display:none">⌕</button><input id="importFile" type="file" accept="application/json" hidden></div></header>
