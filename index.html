@@ -276,6 +276,108 @@ body.home-view .app{padding-top:6px!important}
 body.home-view .top-actions{display:none!important}
 body.home-view .home-head-btn{display:grid!important;place-items:center;width:38px;height:36px;border:0;background:transparent;color:#f4f5ff;font-size:27px;padding:0}
 
+
+/* v31 Focus screen visual refresh — presentation-only; timer logic and storage stay unchanged */
+#page-focus > .panel{
+  padding:16px;
+  border-radius:24px;
+  border:1px solid #303650;
+  background:linear-gradient(155deg,rgba(28,31,54,.98),rgba(12,16,30,.99) 70%);
+  box-shadow:0 16px 38px rgba(0,0,0,.18);
+}
+#page-focus .segment{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:5px;
+  padding:5px;
+  margin-bottom:16px;
+  border-radius:16px;
+  background:#090d19;
+}
+#page-focus .segment button{
+  min-height:42px;
+  padding:9px 3px;
+  font-size:11px;
+  font-weight:750;
+  border-radius:12px;
+  line-height:1.15;
+}
+#page-focus .focus-duration-row{
+  margin:0 0 14px;
+  padding:13px;
+  border-radius:16px;
+  background:linear-gradient(120deg,#171c30,#101522);
+}
+#page-focus .focus-duration-row label{font-size:13px}
+#page-focus .duration-help{font-size:11px;line-height:1.45}
+#page-focus .timer-wrap{
+  margin:0;
+  padding:18px 8px 14px;
+  border-radius:22px;
+  text-align:center;
+  background:radial-gradient(ellipse at 50% 35%,rgba(130,53,255,.16),rgba(12,16,30,0) 68%);
+}
+#page-focus .timer-ring{
+  width:min(258px,70vw);
+  height:min(258px,70vw);
+  margin:0 auto 14px;
+  background:conic-gradient(from -90deg,#a52cff,#5c42ff,#31c5ff,#a52cff var(--timer-progress,0%),#292e43 0);
+  box-shadow:0 0 0 8px rgba(133,66,255,.06),0 0 38px rgba(130,65,255,.18);
+}
+#page-focus .timer-ring:before{
+  inset:10px;
+  background:radial-gradient(circle at 50% 25%,#171a30,#090d18 75%);
+  border:1px solid rgba(255,255,255,.05);
+}
+#page-focus .timer-leaf{font-size:22px;margin-bottom:7px;color:#c8a0ff}
+#page-focus .clock{font-size:clamp(39px,11vw,51px);letter-spacing:1.5px;line-height:1.1}
+#page-focus .timer-sub{margin-top:7px;font-size:12px;color:#aeb8d1}
+#page-focus .timer-controls{
+  grid-template-columns:1.2fr 1fr;
+  gap:10px;
+  margin-top:4px;
+}
+#page-focus .timer-controls .btn{
+  min-height:48px;
+  border-radius:15px;
+  font-weight:800;
+}
+#page-focus #focusStart{box-shadow:0 7px 20px rgba(126,54,255,.2)}
+#page-focus #focusFinish{grid-column:1/-1;border-color:#8d3dff;background:rgba(116,43,210,.16);color:#dfc8ff}
+#page-focus .session-card{
+  margin-top:14px;
+  padding:15px;
+  border-radius:18px;
+  border-color:#2b334b;
+  background:linear-gradient(145deg,#151b2c,#0d1220);
+}
+#page-focus .session-row{
+  gap:10px;
+  margin-top:13px;
+  font-size:13px;
+}
+#page-focus .session-row strong{font-size:14px}
+#page-focus .session-row span:last-child{font-size:12px}
+#page-focus .focus-stat{
+  padding:13px;
+  border-radius:15px;
+  background:linear-gradient(145deg,#12182a,#0a0f1c);
+}
+#page-focus .focus-stat strong{font-size:24px}
+#page-focus .focus-stat span{display:block;margin-top:4px;line-height:1.35}
+#page-focus .quote{
+  margin-top:14px;
+  border-radius:16px;
+  padding:16px 12px;
+  line-height:1.6;
+  background:linear-gradient(110deg,rgba(103,41,179,.2),rgba(28,18,52,.7));
+}
+@media(max-width:360px){
+  #page-focus > .panel{padding:11px}
+  #page-focus .segment button{font-size:10px}
+  #page-focus .timer-ring{width:220px;height:220px}
+  #page-focus .timer-controls{gap:7px}
+}
 </style></head>
 <body><div class="app" id="app">
 <header class="top"><button class="home-head-btn" id="homeMenu" aria-label="Open More" style="display:none">☰</button><div class="brand"><div class="logo">✓</div><div><h1>DayFlow</h1><p>Your day, under control · v4</p></div></div><div class="top-actions"><button class="btn" id="exportBtn">↓ Backup</button><button class="btn" id="importBtn">↑ Restore</button><button class="home-head-btn" id="homeSearch" aria-label="Search tasks" style="display:none">⌕</button><input id="importFile" type="file" accept="application/json" hidden></div></header>
