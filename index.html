@@ -256,6 +256,11 @@ body{background:radial-gradient(ellipse at 50% -10%,#27204b 0,transparent 44%),r
 /* v25: keep backup/restore available in More, remove header buttons */
 #exportBtn, #importBtn { display: none !important; }
 .top-actions { display: none !important; }
+
+/* v27: remove the DayFlow logo/name/subtitle from Home only. Keep the menu button and leave all other pages unchanged. */
+body.home-view .top .brand{display:none!important}
+body.home-view .top{justify-content:flex-start!important;margin-bottom:12px!important;min-height:42px}
+body.home-view .top-actions{display:none!important}
 </style></head>
 <body><div class="app" id="app">
 <header class="top"><button class="home-head-btn" id="homeMenu" aria-label="Open More" style="display:none">☰</button><div class="brand"><div class="logo">✓</div><div><h1>DayFlow</h1><p>Your day, under control · v4</p></div></div><div class="top-actions"><button class="btn" id="exportBtn">↓ Backup</button><button class="btn" id="importBtn">↑ Restore</button><button class="home-head-btn" id="homeSearch" aria-label="Search tasks" style="display:none">⌕</button><input id="importFile" type="file" accept="application/json" hidden></div></header>
